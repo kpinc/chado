@@ -2,7 +2,6 @@ CREATE VIEW affymetrixcel
 AS SELECT
   elementresult.elementresult_id AS elementresult_id,
   elementresult.element_id AS element_id,
-  elementresult.elementresult_id AS elementresult_id,
   elementresult.quantification_id AS quantification_id,
   elementresult.subclass_view AS subclass_view,
   elementresult.foreground AS mean,
@@ -17,7 +16,7 @@ CREATE RULE "_RuleI_affymetrixcel" AS
     INSERT INTO elementresult
     (subclass_view,element_id,quantification_id,foreground,float1,int3)
     VALUES
-    (NEW.subclass_view,NEW.element_id,NEW.quantification_id,NEW.mean,NEW.stdv,NEW.npixels);
+    ('affymetrixcel',NEW.element_id,NEW.quantification_id,NEW.mean,NEW.stdv,NEW.npixels);
 
 CREATE RULE "_RuleU_affymetrixcel" AS
   ON UPDATE TO affymetrixcel
@@ -36,7 +35,8 @@ CREATE RULE "_RuleD_affymetrixcel" AS
   ON DELETE TO affymetrixcel
   DO INSTEAD
     DELETE FROM elementresult
-    WHERE elementresult_id = OLD.elementresult_id;
+    WHERE elementresult_id = OLD.elementresult_id
+    AND subclass_view = 'affymetrixcel';
 
 CREATE VIEW affymetrixmas4
 AS SELECT
