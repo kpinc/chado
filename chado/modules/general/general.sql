@@ -96,7 +96,8 @@ create table project (
        project_id serial not null,
        primary key (project_id),
        name varchar(255) not null,
-       description varchar(255) not null
+       description varchar(255) not null,
+       unique(name)
 );
 
 insert into tableinfo (name,primary_key_column) values('project','project_id');

@@ -211,7 +211,6 @@ create table feature_dbxref (
        foreign key (feature_id) references feature (feature_id),
        dbxref_id int not null,
        foreign key (dbxref_id) references dbxref (dbxref_id),
-       is_current boolean not null default 'true',
 
        unique(feature_id, dbxref_id)
 );
@@ -219,6 +218,23 @@ insert into tableinfo (name,primary_key_column) values('feature_dbxref','feature
 create index feature_dbxref_idx1 on feature_dbxref (feature_id);
 create index feature_dbxref_idx2 on feature_dbxref (dbxref_id);
 
+-- ================================================
+-- TABLE: feature_dbxrefprop
+-- ================================================
+create table feature_dbxrefprop (
+       feature_dbxrefprop_id serial not null,
+       primary key (feature_dbxrefprop_id),
+       feature_dbxref_id int not null,
+       foreign key (feature_dbxref_id) references feature_dbxref (feature_dbxref_id),
+       type_id int not null,
+       foreign key (type_id) references cvterm (cvterm_id),
+       value text not null default '',
+
+       unique(feature_dbxref_id, type_id, value)
+);
+insert into tableinfo (name,primary_key_column) values('feature_dbxrefprop','feature_dbxrefprop_id');
+create index feature_dbxrefprop_idx1 on feature_dbxrefprop (feature_dbxref_id);
+create index feature_dbxrefprop_idx2 on feature_dbxrefprop (type_id);
 
 -- ================================================
 -- TABLE: featurerelationship
@@ -309,8 +325,6 @@ create table feature_synonym (
        foreign key (feature_id) references feature (feature_id),
        pub_id int not null,
        foreign key (pub_id) references pub (pub_id),
-       is_current boolean not null,
-       is_internal boolean not null default 'false',
 
        unique(synonym_id, feature_id, pub_id)
 );
@@ -330,3 +344,22 @@ insert into tableinfo (name,primary_key_column) values('feature_synonym','featur
 create index feature_synonym_idx1 on feature_synonym (synonym_id);
 create index feature_synonym_idx2 on feature_synonym (feature_id);
 create index feature_synonym_idx3 on feature_synonym (pub_id);
+
+-- ================================================
+-- TABLE: feature_synonymprop
+-- ================================================
+create table feature_synonymprop (
+       feature_synonymprop_id serial not null,
+       primary key (feature_synonymprop_id),
+       feature_synonym_id int not null,
+       foreign key (feature_synonym_id) references feature_synonym (feature_synonym_id),
+       type_id int not null,
+       foreign key (type_id) references cvterm (cvterm_id),
+       value text not null default '',
+
+       unique(feature_synonym_id, type_id, value)
+);
+insert into tableinfo (name,primary_key_column) values('feature_synonymprop','feature_synonymprop_id');
+create index feature_synonymprop_idx1 on feature_synonymprop (feature_synonym_id);
+create index feature_synonymprop_idx2 on feature_synonymprop (type_id);
+

@@ -166,6 +166,7 @@ insert into tableinfo (name,primary_key_column) values('assay','assay_id');
 
 create table assay_project (
     assay_project_id serial not null,
+        primary key (assay_project_id),
     assay_id int not null,
         foreign key (assay_id) references assay (assay_id),
     project_id int not null,
@@ -270,7 +271,7 @@ create table assay_biomaterial (
 	foreign key (biomaterial_id) references biomaterial (biomaterial_id) on delete cascade,
     channel_id int null,
 	foreign key (channel_id) references channel (channel_id) on delete set null,
-    unique(assay_id,biomaterial_channel_id)
+    unique(assay_id,biomaterial_id,channel_id)
 );
 create index assay_biomaterial_idx1 on assay_biomaterial (assay_id);
 create index assay_biomaterial_idx2 on assay_biomaterial (biomaterial_id);
@@ -339,7 +340,7 @@ create table quantification (
     quantificationdate date null,
     name varchar(100) null,
     uri varchar(500) null,
-    unique(name)
+    unique(name,analysis_id)
 );
 create index quantification_idx1 on quantification (acquisition_id);
 create index quantification_idx2 on quantification (operator_id);
@@ -421,7 +422,7 @@ create table element (
     smallstring1 varchar(100) null,
     smallstring2 varchar(100) null,
     string1 varchar(500) null,
-    string2 varchar(500) null,
+    string2 varchar(500) null
 );
 create index element_idx1 on element (feature_id);
 create index element_idx2 on element (array_id);

@@ -87,14 +87,31 @@ create table phenotype_cvterm (
        foreign key (phenotype_id) references phenotype (phenotype_id),
        cvterm_id int not null,
        foreign key (cvterm_id) references cvterm (cvterm_id),
-       rank int not null,
 
-       unique(phenotype_id,cvterm_id,rank)
+       unique(phenotype_id,cvterm_id)
 );
 insert into tableinfo (name,primary_key_column) values('phenotype_cvterm','phenotype_cvterm_id');
 create index phenotype_cvterm_idx1 on phenotype_cvterm (phenotype_id);
 create index phenotype_cvterm_idx2 on phenotype_cvterm (cvterm_id);
 
+-- ================================================
+-- TABLE: phenoype_cvtermprop
+-- ================================================
+
+create table phenotype_cvtermprop (
+       phenotype_cvtermprop_id serial not null,
+       primary key (phenotype_cvtermprop_id),
+       phenotype_cvterm_id int not null,
+       foreign key (phenotype_cvterm_id) references phenotype_cvterm (phenotype_cvterm_id),
+       type_id int not null,
+       foreign key (type_id) references cvterm (cvterm_id),
+       value text not null default '',
+
+       unique(phenotype_cvterm_id, type_id, value)   
+);
+insert into tableinfo (name,primary_key_column) values('phenotype_cvtermprop','phenotype_cvtermprop_id');
+create index phenotype_cvtermprop_idx1 on phenotype_cvtermprop (phenotype_cvterm_id);
+create index phenotype_cvtermprop_idx2 on phenotype_cvtermprop (type_id);
 
 -- ================================================
 -- TABLE: interaction
@@ -112,7 +129,7 @@ create table interaction (
        phenotype_id int,
        foreign key (phenotype_id) references phenotype (phenotype_id)
 );
-insert into tableinfo (name,primary_key_column) values('interaction','interaction_id');
+insert into tableinfo (name,primary_key_column) values ('interaction','interaction_id');
 create index interaction_idx1 on interaction (pub_id);
 create index interaction_idx2 on interaction (background_genotype_id);
 create index interaction_idx3 on interaction (phenotype_id);

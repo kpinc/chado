@@ -76,7 +76,7 @@ create table cvtermpath (
        foreign key (cv_id) references cv (cv_id),
        pathdistance int,
 
-       unique (subject_id, object_id)
+       unique (subject_id, object_id, type_id, pathdistance)
 );
 insert into tableinfo (name,primary_key_column) values('cvtermpath','cvtermpath_id');
 create index cvtermpath_idx1 on cvtermpath (type_id);
