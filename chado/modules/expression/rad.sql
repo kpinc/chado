@@ -22,7 +22,6 @@
 --dropped analysisinvocation_quantification in favor of having analysisinvocation_id as a nullable FK in quantification.  how can a quantification ever have more than one associated processing step associated with it?  tableinfo_id is in analysisinvocation, so we can drop it from quantification
 
 
-
 create table mageml (
     mageml_id serial not null,
 	primary key (mageml_id),
@@ -331,6 +330,7 @@ create table elementresult (
     int6                               																		int null,
     tinyint1                           																		int null,
     tinyint2                           																		int null,
+    tinyint3                           																		int null,
     smallint1                          																		int null,
     smallint2                          																		int null,
     char1                              																		varchar(5) null,
