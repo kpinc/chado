@@ -29,6 +29,7 @@ create table featuremap (
 
        unique(mapname)
 );
+insert into tableinfo (name,primary_key_column) values('featuremap','featuremap_id');
 
 
 -- ================================================
@@ -59,6 +60,7 @@ create table featurerange (
        foreign key (rightendf_id) references feature (feature_id),
        rangestr varchar(255)
 );
+insert into tableinfo (name,primary_key_column) values('featurerange','featurerange_id');
 create index featurerange_idx1 on featurerange (featuremap_id);
 create index featurerange_idx2 on featurerange (feature_id);
 create index featurerange_idx3 on featurerange (leftstartf_id);
@@ -84,6 +86,7 @@ create table featurepos (
 );
 -- map_feature_id links to the feature (map) upon which the feature is
 -- being localized
+insert into tableinfo (name,primary_key_column) values('featurepos','featurepos_id');
 create index featurepos_idx1 on featurepos (featuremap_id);
 create index featurepos_idx2 on featurepos (feature_id);
 create index featurepos_idx3 on featurepos (map_feature_id);
@@ -101,6 +104,7 @@ create table featuremap_pub (
        pub_id int not null,
        foreign key (pub_id) references pub (pub_id)
 );
+insert into tableinfo (name,primary_key_column) values('featuremap_pub','featuremap_pub_id');
 create index featuremap_pub_idx1 on featuremap_pub (featuremap_id);
 create index featuremap_pub_idx2 on featuremap_pub (pub_id);
 

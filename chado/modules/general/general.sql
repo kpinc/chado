@@ -1,3 +1,22 @@
+-- ================================================
+-- TABLE: tableinfo
+-- ================================================
+
+create table tableinfo (
+       tableinfo_id serial not null,
+       primary key (tableinfo_id),
+       name varchar(30) not null,
+--       table_type varchar(40) not null,
+       primary_key_column varchar(30) null,
+--       is_versioned int not null,
+       is_view int not null default 0,
+       view_on_table_id int null,
+       superclass_table_id int null,
+       is_updateable int not null default 1,
+       modification_date date not null default now()
+);
+insert into tableinfo (name,primary_key_column) values('tableinfo','tableinfo_id');
+
 --
 -- should this be in pub?
 --
@@ -10,6 +29,7 @@ create table contact (
 -- fields to be added after discussion
        description varchar(255) null
 );
+insert into tableinfo (name,primary_key_column) values('contact','contact_id');
 
 -- ================================================
 -- TABLE: db
@@ -26,6 +46,7 @@ create table db (
        url varchar(255) null,
        unique (name)
 );
+insert into tableinfo (name,primary_key_column) values('db','db_id');
 
 
 -- ================================================
@@ -43,6 +64,7 @@ create table dbxref (
 
        unique (db_id, accession, version)
 );
+insert into tableinfo (name,primary_key_column) values('dbxref','dbxref_id');
 
 --
 -- this table pending review
@@ -90,25 +112,6 @@ create table dbxref (
 --create index dbxrefrelationship_idx3 on dbxrefrelationship (objterm_id);
 
 -- ================================================
--- TABLE: tableinfo
--- ================================================
-
-create table tableinfo (
-       tableinfo_id serial not null,
-       primary key (tableinfo_id),
-       name varchar(30) not null,
-       table_type varchar(40) not null,
-       primary_key_column varchar(30) null,
-       database_id int not null,
-       is_versioned int not null,
-       is_view int not null,
-       view_on_table_id int null,
-       superclass_table_id int null,
-       is_updateable int not null,
-       modification_date date not null
-);
-
--- ================================================
 -- TABLE: project
 -- ================================================
 create table project (
@@ -117,3 +120,5 @@ create table project (
        name varchar(255) not null,
        description varchar(255) not null
 );
+
+insert into tableinfo (name,primary_key_column) values('project','project_id');

@@ -22,6 +22,7 @@ create table organism (
 -- for adding internal project specific data
 -- [cjm]
 -- done (below) 19-MAY-03 [dave]
+insert into tableinfo (name,primary_key_column) values('organism','organism_id');
 
 
 -- ================================================
@@ -38,6 +39,7 @@ create table organism_dbxref (
 
        unique(organism_id,dbxref_id)
 );
+insert into tableinfo (name,primary_key_column) values('organism_dbxref','organism_dbxref_id');
 create index organism_dbxref_idx1 on organism_dbxref (organism_id);
 create index organism_dbxref_idx2 on organism_dbxref (dbxref_id);
 
@@ -57,6 +59,7 @@ create table organismprop (
 
        unique(organism_id, type_id, value, rank)
 );
+insert into tableinfo (name,primary_key_column) values('organismprop','organismprop_id');
 create index organismprop_idx1 on organismprop (organism_id);
 create index organismprop_idx2 on organismprop (type_id);
 

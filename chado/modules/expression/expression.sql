@@ -17,6 +17,7 @@ create table expression (
        primary key (expression_id),
        description text
 );
+insert into tableinfo (name,primary_key_column) values('expression','expression_id');
 
 -- ================================================
 -- TABLE: feature_expression
@@ -32,6 +33,7 @@ create table feature_expression (
 
        unique(expression_id,feature_id)       
 );
+insert into tableinfo (name,primary_key_column) values('feature_expression','feature_expression_id');
 create index feature_expression_idx1 on feature_expression (expression_id);
 create index feature_expression_idx2 on feature_expression (feature_id);
 
@@ -71,6 +73,7 @@ create table expression_cvterm (
 
        unique(expression_id,cvterm_id)
 );
+insert into tableinfo (name,primary_key_column) values('expression_cvterm','expression_cvterm_id');
 create index expression_cvterm_idx1 on expression_cvterm (expression_id);
 create index expression_cvterm_idx2 on expression_cvterm (cvterm_id);
 
@@ -89,6 +92,7 @@ create table expression_pub (
 
        unique(expression_id,pub_id)       
 );
+insert into tableinfo (name,primary_key_column) values('expression_pub','expression_pub_id');
 create index expression_pub_idx1 on expression_pub (expression_id);
 create index expression_pub_idx2 on expression_pub (pub_id);
 
@@ -104,6 +108,7 @@ create table eimage (
        eimage_type varchar(255) not null,
        image_uri varchar(255)
 );
+insert into tableinfo (name,primary_key_column) values('eimage','eimage_id');
 -- we expect images in eimage_data (eg jpegs) to be uuencoded
 -- describes the type of data in eimage_data
 
@@ -122,5 +127,6 @@ create table expression_image (
 
        unique(expression_id,eimage_id)
 );
+insert into tableinfo (name,primary_key_column) values('expression_image','expression_image_id');
 create index expression_image_idx1 on expression_image (expression_id);
 create index expression_image_idx2 on expression_image (eimage_id);

@@ -11,7 +11,7 @@ create table genotype (
        primary key (genotype_id),
        description varchar(255)
 );
-
+insert into tableinfo (name,primary_key_column) values('genotype','genotype_id');
 
 -- ================================================
 -- TABLE: feature_genotype
@@ -27,6 +27,7 @@ create table feature_genotype (
 
        unique(feature_id,genotype_id)
 );
+insert into tableinfo (name,primary_key_column) values('feature_genotype','feature_genotype_id');
 create index feature_genotype_idx1 on feature_genotype (feature_id);
 create index feature_genotype_idx2 on feature_genotype (genotype_id);
 
@@ -50,6 +51,7 @@ create table phenotype (
 -- for FB where we have three types of statement in *k: "Phenotypic class:",
 -- "Phenotype manifest in:", and free-text]
 -- Do we want to call this simply genotype_id to allow natural joins?
+insert into tableinfo (name,primary_key_column) values('phenotype','phenotype_id');
 create index phenotype_idx1 on phenotype (type_id);
 create index phenotype_idx2 on phenotype (pub_id);
 create index phenotype_idx3 on phenotype (backgroundgenotype_id);
@@ -69,6 +71,7 @@ create table feature_phenotype (
 
        unique(feature_id,phenotype_id)       
 );
+insert into tableinfo (name,primary_key_column) values('feature_phenotype','feature_phenotype_id');
 create index feature_phenotype_idx1 on feature_phenotype (feature_id);
 create index feature_phenotype_idx2 on feature_phenotype (phenotype_id);
 
@@ -88,6 +91,7 @@ create table phenotype_cvterm (
 
        unique(phenotype_id,cvterm_id,rank)
 );
+insert into tableinfo (name,primary_key_column) values('phenotype_cvterm','phenotype_cvterm_id');
 create index phenotype_cvterm_idx1 on phenotype_cvterm (phenotype_id);
 create index phenotype_cvterm_idx2 on phenotype_cvterm (cvterm_id);
 
@@ -108,6 +112,7 @@ create table interaction (
        phenotype_id int,
        foreign key (phenotype_id) references phenotype (phenotype_id)
 );
+insert into tableinfo (name,primary_key_column) values('interaction','interaction_id');
 create index interaction_idx1 on interaction (pub_id);
 create index interaction_idx2 on interaction (background_genotype_id);
 create index interaction_idx3 on interaction (phenotype_id);
@@ -127,6 +132,7 @@ create table interactionsubject (
 
        unique(feature_id,interaction_id)
 );
+insert into tableinfo (name,primary_key_column) values('interactionsubject','interactionsubject_id');
 create index interactionsubject_idx1 on interactionsubject (feature_id);
 create index interactionsubject_idx2 on interactionsubject (interaction_id);
 
@@ -145,5 +151,6 @@ create table interactionobject (
 
        unique(feature_id,interaction_id)
 );
+insert into tableinfo (name,primary_key_column) values('interactionobject','interactionobject_id');
 create index interactionobject_idx1 on interactionobject (feature_id);
 create index interactionobject_idx2 on interactionobject (interaction_id);

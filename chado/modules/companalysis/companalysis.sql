@@ -62,6 +62,9 @@ create table analysis (
 
     unique(program, programversion, sourcename)
 );
+insert into tableinfo (name,primary_key_column,is_updateable) values('analysis','analysis_id',0);
+--insert into tableinfo (name,primary_key_column) values('','_id');
+
 
 -- ================================================
 -- TABLE: analysisinvocation
@@ -101,6 +104,7 @@ create table analysisinvocation (
     foreign key (outputtableinfo_id) references tableinfo (tableinfo_id),
     outputrow_id int not null
 );
+insert into tableinfo (name,primary_key_column,is_updateable) values('analysisinvocation','analysisinvocation_id',0);
 
 
 -- ================================================
@@ -121,6 +125,7 @@ create table analysisinvocationprop (
 
     unique(analysisinvocation_id, type_id, value)
 );
+insert into tableinfo (name,primary_key_column,is_updateable) values('analysisinvocationprop','analysisinvocationprop_id',0);
 create index analysisinvocationprop_idx1 on analysisinvocationprop (analysisinvocation_id);
 create index analysisinvocationprop_idx2 on analysisinvocationprop (type_id);
 
@@ -197,5 +202,6 @@ create table analysisfeature (
 
     unique (feature_id,analysis_id)
 );
+insert into tableinfo (name,primary_key_column) values('analysisfeature','analysisfeature_id');
 create index analysisfeature_idx1 on analysisfeature (feature_id);
 create index analysisfeature_idx2 on analysisfeature (analysis_id);

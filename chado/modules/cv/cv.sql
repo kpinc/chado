@@ -12,6 +12,7 @@ create table cv (
 
        unique(name)
 );
+insert into tableinfo (name,primary_key_column) values('cv','cv_id');
 
 -- ================================================
 -- TABLE: cvterm
@@ -29,6 +30,7 @@ create table cvterm (
 
        unique(name, cv_id)
 );
+insert into tableinfo (name,primary_key_column) values('cvterm','cvterm_id');
 create index cvterm_idx1 on cvterm (cv_id);
 -- the primary dbxref for this term.  Other dbxrefs may be cvterm_dbxref
 -- The unique key on termname, cv_id ensures that all terms are 
@@ -51,6 +53,7 @@ create table cvtermrelationship (
 
        unique(type_id, subject_id, object_id)
 );
+insert into tableinfo (name,primary_key_column) values('cvtermrelationship','cvtermrelationship_id');
 create index cvtermrelationship_idx1 on cvtermrelationship (type_id);
 create index cvtermrelationship_idx2 on cvtermrelationship (subject_id);
 create index cvtermrelationship_idx3 on cvtermrelationship (object_id);
@@ -75,6 +78,7 @@ create table cvtermpath (
 
        unique (subject_id, object_id)
 );
+insert into tableinfo (name,primary_key_column) values('cvtermpath','cvtermpath_id');
 create index cvtermpath_idx1 on cvtermpath (type_id);
 create index cvtermpath_idx2 on cvtermpath (subject_id);
 create index cvtermpath_idx3 on cvtermpath (object_id);
@@ -94,6 +98,7 @@ create table cvtermsynonym (
 
        unique(cvterm_id, synonym)
 );
+insert into tableinfo (name,primary_key_column) values('cvtermsynonym','cvtermsynonym_id');
 create index cvtermsynonym_idx1 on cvtermsynonym (cvterm_id);
 
 
@@ -111,6 +116,7 @@ create table cvterm_dbxref (
 
        unique(cvterm_id, dbxref_id)
 );
+insert into tableinfo (name,primary_key_column) values('cvterm_dbxref','cvterm_dbxref_id');
 create index cvterm_dbxref_idx1 on cvterm_dbxref (cvterm_id);
 create index cvterm_dbxref_idx2 on cvterm_dbxref (dbxref_id);
 

@@ -35,6 +35,7 @@ create table feature (
 -- modification timestamps (as opposed to db auditing info, handled elsewhere).
 -- The expectation is that these fields would be available to software 
 -- interacting with chado.
+insert into tableinfo (name,primary_key_column) values('feature','feature_id');
 create sequence feature_uniquename_seq;
 create index feature_name_ind1 on feature(name);
 create index feature_idx1 on feature (dbxref_id);
@@ -134,6 +135,7 @@ create table featureloc (
        unique (feature_id, locgroup, rank)
 );
 -- phase: phase of translation wrt srcfeature_id.  Values are 0,1,2
+insert into tableinfo (name,primary_key_column) values('featureloc','featureloc_id');
 create index featureloc_idx1 on featureloc (feature_id);
 create index featureloc_idx2 on featureloc (srcfeature_id);
 create index featureloc_idx3 on featureloc (srcfeature_id,fmin,fmax);
@@ -152,6 +154,7 @@ create table feature_pub (
 
        unique(feature_id, pub_id)
 );
+insert into tableinfo (name,primary_key_column) values('feature_pub','feature_pub_id');
 create index feature_pub_idx1 on feature_pub (feature_id);
 create index feature_pub_idx2 on feature_pub (pub_id);
 
@@ -172,6 +175,7 @@ create table featureprop (
 
        unique(feature_id, type_id, value, rank)
 );
+insert into tableinfo (name,primary_key_column) values('featureprop','featureprop_id');
 create index featureprop_idx1 on featureprop (feature_id);
 create index featureprop_idx2 on featureprop (type_id);
 
@@ -190,6 +194,7 @@ create table featureprop_pub (
 
        unique(featureprop_id, pub_id)
 );
+insert into tableinfo (name,primary_key_column) values('featureprop_pub','featureprop_pub_id');
 create index featureprop_pub_idx1 on featureprop_pub (featureprop_id);
 create index featureprop_pub_idx2 on featureprop_pub (pub_id);
 
@@ -210,12 +215,13 @@ create table feature_dbxref (
 
        unique(feature_id, dbxref_id)
 );
+insert into tableinfo (name,primary_key_column) values('feature_dbxref','feature_dbxref_id');
 create index feature_dbxref_idx1 on feature_dbxref (feature_id);
 create index feature_dbxref_idx2 on feature_dbxref (dbxref_id);
 
 
 -- ================================================
--- TABLE: feature_relationship
+-- TABLE: featurerelationship
 -- ================================================
 
 -- features can be arranged in graphs, eg exon partof transcript 
@@ -229,22 +235,23 @@ create index feature_dbxref_idx2 on feature_dbxref (dbxref_id);
 -- coordinates, we can't always do this - eg transpliced genes.
 -- it's also useful for quickly getting implicit introns
 
-create table feature_relationship (
-       feature_relationship_id serial not null,
-       primary key (feature_relationship_id),
-       subjfeature_id int not null,
-       foreign key (subjfeature_id) references feature (feature_id),
-       objfeature_id int not null,
-       foreign key (objfeature_id) references feature (feature_id),
+create table featurerelationship (
+       featurerelationship_id serial not null,
+       primary key (featurerelationship_id),
+       subject_id int not null,
+       foreign key (subject_id) references feature (feature_id),
+       object_id int not null,
+       foreign key (object_id) references feature (feature_id),
        type_id int not null,
        foreign key (type_id) references cvterm (cvterm_id),
-       relrank int,
+       rank int,
 
-       unique(subjfeature_id, objfeature_id, type_id)
+       unique(subject_id, object_id, type_id)
 );
-create index feature_relationship_idx1 on feature_relationship (subjfeature_id);
-create index feature_relationship_idx2 on feature_relationship (objfeature_id);
-create index feature_relationship_idx3 on feature_relationship (type_id);
+insert into tableinfo (name,primary_key_column) values('featurerelationship','featurerelationship_id');
+create index featurerelationship_idx1 on featurerelationship (subject_id);
+create index featurerelationship_idx2 on featurerelationship (object_id);
+create index featurerelationship_idx3 on featurerelationship (type_id);
 
 
 -- ================================================
@@ -264,6 +271,7 @@ create table feature_cvterm (
        unique (feature_id, cvterm_id, pub_id)
 
 );
+insert into tableinfo (name,primary_key_column) values('feature_cvterm','feature_cvterm_id');
 create index feature_cvterm_idx1 on feature_cvterm (feature_id);
 create index feature_cvterm_idx2 on feature_cvterm (cvterm_id);
 create index feature_cvterm_idx3 on feature_cvterm (pub_id);
@@ -318,6 +326,7 @@ create table feature_synonym (
 -- the is_internal bit may be set to 'true' so that it is known that the 
 -- synonym is "internal" and should be queryable but should not be listed 
 -- in reports as a valid synonym.
+insert into tableinfo (name,primary_key_column) values('feature_synonym','feature_synonym_id');
 create index feature_synonym_idx1 on feature_synonym (synonym_id);
 create index feature_synonym_idx2 on feature_synonym (feature_id);
 create index feature_synonym_idx3 on feature_synonym (pub_id);

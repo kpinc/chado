@@ -203,12 +203,12 @@ create index wwwuser_pub_idx2 on wwwuser_pub(pub_id);
 create table wwwuserrelationship (
 	wwwuserrelationship_id serial not null,
 	primary key (wwwuserrelationship_id),
-	objwwwuser_id int not null,
-	foreign key (objwwwuser_id) references wwwuser (wwwuser_id),
-	subjwwwuser_id int not null,
-	foreign key (subjwwwuser_id) references wwwuser (wwwuser_id),
+	object_id int not null,
+	foreign key (object_id) references wwwuser (wwwuser_id),
+	subject_id int not null,
+	foreign key (subject_id) references wwwuser (wwwuser_id),
 	world_read smallint not null default 1,
-	unique(objwwwuser_id,subjwwwuser_id)
+	unique(object_id,subject_id)
 );
-create index wwwuserrelationship_idx1 on wwwuserrelationship(subjwwwuser_id);
-create index wwwuserrelationship_idx2 on wwwuserrelationship(objwwwuser_id);
+create index wwwuserrelationship_idx1 on wwwuserrelationship(subject_id);
+create index wwwuserrelationship_idx2 on wwwuserrelationship(object_id);
