@@ -380,8 +380,8 @@ insert into tableinfo (name,primary_key_column) values('quantificationrelationsh
 create table control (
     control_id serial not null,
 	primary key (control_id),
-    controltype_id int not null,
-	foreign key (controltype_id) references cvterm (cvterm_id) on delete cascade,
+    type_id int not null,
+	foreign key (type_id) references cvterm (cvterm_id) on delete cascade,
     assay_id int not null,
 	foreign key (assay_id) references assay (assay_id) on delete cascade,
     tableinfo_id int not null,
@@ -390,7 +390,7 @@ create table control (
     name varchar(100) null,
     value varchar(255) null
 );
-create index control_idx1 on control (controltype_id);
+create index control_idx1 on control (type_id);
 create index control_idx2 on control (assay_id);
 create index control_idx3 on control (tableinfo_id);
 create index control_idx4 on control (row_id);
