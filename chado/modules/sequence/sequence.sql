@@ -6,9 +6,9 @@ create table feature (
        feature_id serial not null,
        primary key (feature_id),
        name varchar(255) not null,
-       fmin int,
-       fmax int,
-       fstrand smallint,
+       fnbeg int,
+       fnend int,
+       strand smallint,
        residues text,
        seqlen int,
        md5checksum char(32),
@@ -19,21 +19,20 @@ create table feature (
        timeentered timestamp not null default current_timestamp,
        timelastmod timestamp not null default current_timestamp,
 
-       unique(name, fmin, fmax, fstrand, seqlen, md5checksum, type_id)
+       unique(name, end5, end3, strand, seqlen, md5checksum, type_id)
 );
 ## dbxref should be unique; does that work w/ null values?
 ## every feature has to have an accession (dbxref_id)
-## IMPORTANT: fmin and fmax are space-based coordinates
+## IMPORTANT: fnbeg and fnend are space-based (INTERBASE) coordinates
 ## this is vital as it allows us to represent zero-length
 ## features eg splice sites, insertion points without
 ## an awkward fuzzy system
 
-## by using min and max rather than start/end we make
-## intersection queries faster/easier, but we also make
-## queries involing up/downstream more difficult.
-## min and max is good as it is unambiguous - many systems
-## (eg bioperl, gff) use "start" and "end" whereas what they actually
-## mean is min and max, NOT 5', 3'
+## fnbeg, fnend are for feature natural begin/end
+## by natural begin, end we mean these are the actual
+## beginning (5' position) and actual end (3' position)
+## rather than the low position and high position, as
+## these terms are sometimes erroneously used
 
 ## seqlen is redundant except for transcripts (where we're being ambiguous)
 
@@ -60,7 +59,7 @@ create table feature_pub (
 create table featureprop (
        featureprop_id serial not null,
        primary key (featureprop_id),
-       feature_id int,
+       feature_id int not null,
        foreign key (feature_id) references feature (feature_id),
        pkey_id int not null,
        foreign key (pkey_id) references cvterm (cvterm_id),
@@ -117,9 +116,9 @@ create table feature_dbxref (
 create table feature_relationship (
        feature_relationship_id serial not null,
        primary key (feature_relationship_id),
-       subjfeature_id int,
+       subjfeature_id int not null,
        foreign key (subjfeature_id) references feature (feature_id),
-       objfeature_id int,
+       objfeature_id int not null,
        foreign key (objfeature_id) references feature (feature_id),
        type_id int,
        foreign key (type_id) references cvterm (cvterm_id),
