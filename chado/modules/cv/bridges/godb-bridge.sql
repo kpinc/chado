@@ -1,14 +1,15 @@
+--- ALPHA CODE
+
 --- term
 
 CREATE VIEW term AS
 SELECT
- cvterm_id AS id,
---is this correct?  what is acc? -allen
- termdefinition AS acc,
- name      AS name,
- 0         AS is_obsolete,
- 0         AS is_root
-FROM cvterm;
+ cvterm_id                          AS id,
+ db.name || ':' || dbxref.accession AS acc,
+ cvterm.name                        AS name,
+ is_obsolete                        AS is_obsolete,
+ 0                                  AS is_root
+FROM cvterm INNER JOIN dbxref USING (dbxref_id) INNER JOIN db USING (db_id) INNER JOIN cv USING (cv_id);
 
 CREATE RULE "_RuleI_term" AS
  ON INSERT TO term
