@@ -100,7 +100,7 @@ create table array (
     description varchar(500) null,
     array_dimensions varchar(50) null,
     element_dimensions varchar(50) null,
-    number_of_elements int null,
+    num_of_elements int null,
     num_array_columns int null,
     num_array_rows int null,
     num_grid_columns int null,
@@ -148,12 +148,12 @@ create table biomaterial (
     biosourceprovider_id int null,
 	foreign key (biosourceprovider_id) references contact (contact_id) on delete set null,
 --is this table still an imp, needs to have a view to use?
-    subclass_view varchar(27) not null,
+--    subclass_view varchar(27) not null,
     dbxref_id varchar(50) null,
 	foreign key (dbxref_id) references dbxref (dbxref_id) on delete set null,
 --what about these fields?
-    string1 varchar(100) null,
-    string2 varchar(500) null
+    name varchar(100) null,
+    description varchar(500) null
 );
 insert into tableinfo (name,primary_key_column) values('biomaterial','biomaterial_id');
 
