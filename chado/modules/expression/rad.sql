@@ -488,11 +488,11 @@ create table elementresultrelationship (
     elementresultrelationship_id serial not null,
         primary key (elementresultrelationship_id),
     subject_id int not null,
-        foreign key (subject_id) references cvterm (cvterm_id),
+        foreign key (subject_id) references elementresult (elementresult_id),
     type_id int not null,
         foreign key (type_id) references cvterm (cvterm_id),
     object_id int not null,
-        foreign key (object_id) references cvterm (cvterm_id),
+        foreign key (object_id) references elementresult (elementresult_id),
     unique(subject_id,type_id,object_id)
 );
 create index elementresultrelationship_idx1 on elementresultrelationship (subject_id);
