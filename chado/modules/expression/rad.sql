@@ -202,11 +202,11 @@ create table biomaterialrelationship (
     biomaterialrelationship_id serial not null,
         primary key (biomaterialrelationship_id),
     subject_id int not null,
-        foreign key (subject_id) references cvterm (cvterm_id),
+        foreign key (subject_id) references biomaterial (biomaterial_id),
     type_id int not null,
         foreign key (type_id) references cvterm (cvterm_id),
     object_id int not null,
-        foreign key (object_id) references cvterm (cvterm_id),
+        foreign key (object_id) references biomaterial (biomaterial_id),
     unique(subject_id,type_id,object_id)
 );
 create index biomaterialrelationship_idx1 on biomaterialrelationship (subject_id);
