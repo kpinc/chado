@@ -292,26 +292,6 @@ create index feature_cvterm_idx1 on feature_cvterm (feature_id);
 create index feature_cvterm_idx2 on feature_cvterm (cvterm_id);
 create index feature_cvterm_idx3 on feature_cvterm (pub_id);
 
-
--- ================================================
--- TABLE: synonym
--- ================================================
-
-create table synonym (
-       synonym_id serial not null,
-       primary key (synonym_id),
-       name varchar(255) not null,
-       type_id int not null,
-       synonym_sgml varchar(255) not null,
-       foreign key (type_id) references cvterm (cvterm_id),
-
-       unique(name,type_id)
-);
--- type_id: types would be symbol and fullname for now
--- synonym_sgml: sgml-ized version of symbols
-create index synonym_idx1 on synonym (type_id);
-
-
 -- ================================================
 -- TABLE: feature_synonym
 -- ================================================

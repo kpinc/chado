@@ -86,20 +86,39 @@ create index cvtermpath_idx4 on cvtermpath (cv_id);
 
 
 -- ================================================
--- TABLE: cvtermsynonym
+-- TABLE: synonym
 -- ================================================
 
-create table cvtermsynonym (
-       cvtermsynonym_id serial not null,
-       primary key (cvtermsynonym_id),
+create table synonym (
+       synonym_id serial not null,
+       primary key (synonym_id),
+       name varchar(255) not null,
+       type_id int not null,
+       synonym_sgml varchar(255) not null,
+       foreign key (type_id) references cvterm (cvterm_id),
+
+       unique(name,type_id)
+);
+-- type_id: types would be symbol and fullname for now
+-- synonym_sgml: sgml-ized version of symbols
+create index synonym_idx1 on synonym (type_id);
+
+
+-- ================================================
+-- TABLE: cvterm_synonym
+-- ================================================
+
+create table cvterm_synonym (
+       cvterm_synonym_id serial not null,
+       primary key (cvterm_synonym_id),
        cvterm_id int not null,
        foreign key (cvterm_id) references cvterm (cvterm_id),
-       synonym varchar(255) not null,
-
-       unique(cvterm_id, synonym)
+       synonym_id int not null,
+       foreign key (synonym_id) references synonym (synonym_id),
+       unique(cvterm_id, synonym_id)
 );
-insert into tableinfo (name,primary_key_column) values('cvtermsynonym','cvtermsynonym_id');
-create index cvtermsynonym_idx1 on cvtermsynonym (cvterm_id);
+insert into tableinfo (name,primary_key_column) values('cvterm_synonym','cvterm_synonym_id');
+create index cvterm_synonym_idx1 on cvterm_synonym (cvterm_id);
 
 
 -- ================================================
