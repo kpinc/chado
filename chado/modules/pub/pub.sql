@@ -115,8 +115,6 @@ create table pub_author (
        foreign key (author_id) references author (author_id),
        pub_id int not null,
        foreign key (pub_id) references pub (pub_id),
-       rank int not null,
-       editor boolean default 'false',
 
        unique(author_id,pub_id)
 );
@@ -125,6 +123,26 @@ create table pub_author (
 insert into tableinfo (name,primary_key_column) values('pub_author','pub_author_id');
 create index pub_author_idx1 on pub_author (author_id);
 create index pub_author_idx2 on pub_author (pub_id);
+
+-- ================================================
+-- TABLE: pub_authorprop
+-- ================================================
+
+create table pub_authorprop (
+       pub_authorprop_id serial not null,
+       primary key (pub_authorprop_id),
+       pub_author_id int not null,
+       foreign key (pub_author_id) references pub_author (pub_author_id),
+       type_id int not null,
+       foreign key (type_id) references cvterm (cvterm_id),
+       value text not null,
+       rank integer,
+
+       unique(pub_author_id,type_id,value)
+);
+insert into tableinfo (name,primary_key_column) values('pub_authorprop','pub_authorprop_id');
+create index pub_authorprop_idx1 on pub_authorprop (pub_author_id);
+create index pub_authorprop_idx2 on pub_authorprop (type_id);
 
 
 -- ================================================
