@@ -32,7 +32,7 @@ create table cvterm (
        primary key (cvterm_id),
        cv_id int not null,
        foreign key (cv_id) references cv (cv_id) on delete cascade,
-       name varchar(255) not null,
+       name varchar(512) not null,
        definition text,
        dbxref_id int not null,
        foreign key (dbxref_id) references dbxref (dbxref_id) on delete set null,
