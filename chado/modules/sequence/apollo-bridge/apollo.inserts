@@ -33,9 +33,13 @@ insert into analysis (name,program,programversion,sourcename)
    values ('Rice_cross_genome_match','blat','1','Rice_genome');
 insert into analysis (name,program,programversion,sourcename)
    values ('Millet_EST_match','blat','1','Millet_EST');
+insert into analysis (name,program,programversion,sourcename)
+   values ('Sorghum_cross_genome_match','blat','1','Sorghum_genome'); 
 
 
 insert into db (name) values ('DB:TIGR_Maize');
+insert into db (name) values ('DB:TIGR_Osa');
+insert into db (name) values ('DB:TIGR_EGAD');
 
 insert into pub (uniquename, title, type_id) values ('none', 'none', (select cvterm_id from cvterm where name = 'null pub' and cv_id in (select cv_id from cv where name='pub type') ) );
 
