@@ -25,11 +25,12 @@ create table cvterm (
     primary key (cvterm_id),
     cv_id int not null,
     foreign key (cv_id) references cv (cv_id) on delete cascade INITIALLY DEFERRED,
-    name varchar(1024) not null,
+    name varchar(1024),
     definition text,
     dbxref_id int not null,
     foreign key (dbxref_id) references dbxref (dbxref_id) on delete set null INITIALLY DEFERRED,
     is_obsolete int not null default 0,
+    is_instance int not null default 0,
     is_relationshiptype int not null default 0,
     constraint cvterm_c1 unique (name,cv_id,is_obsolete),
     constraint cvterm_c2 unique (dbxref_id)
