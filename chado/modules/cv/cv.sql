@@ -6,6 +6,8 @@ create table cv (
    definition text,
    constraint cv_c1 unique (name)
 );
+CREATE INDEX cv_idx_id_name ON cvterm (cv_id,name);
+
 
 COMMENT ON TABLE cv IS 'A controlled vocabulary or ontology. A cv is
 composed of cvterms (aka terms, classes, types, universals - relations
@@ -23,7 +25,7 @@ membership of this ontology';
 create table cvterm (
     cvterm_id serial not null,
     primary key (cvterm_id),
-    cv_id int not null,
+    cv_id int,
     foreign key (cv_id) references cv (cv_id) on delete cascade INITIALLY DEFERRED,
     name varchar(1024),
     definition text,
@@ -35,6 +37,10 @@ create table cvterm (
     constraint cvterm_c1 unique (name,cv_id,is_obsolete),
     constraint cvterm_c2 unique (dbxref_id)
 );
+create index cvterm_idx1 on cvterm (cv_id);
+create index cvterm_idx2 on cvterm (name);
+create index cvterm_idx3 on cvterm (dbxref_id);
+CREATE INDEX cvterm_idx_name_dbxref ON cvterm (name,dbxref_id);
 
 COMMENT ON TABLE cvterm IS 'A term, class, universal or type within an
 ontology or controlled vocabulary.  This table is also used for
@@ -77,9 +83,6 @@ ID should be appended to the name to ensure uniqueness';
 
 COMMENT ON INDEX cvterm_c2 IS 'the OBO identifier is globally unique';
 
-create index cvterm_idx1 on cvterm (cv_id);
-create index cvterm_idx2 on cvterm (name);
-create index cvterm_idx3 on cvterm (dbxref_id);
 
 create table cvterm_relationship (
     cvterm_relationship_id serial not null,
