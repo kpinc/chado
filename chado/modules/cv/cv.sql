@@ -131,7 +131,7 @@ create table cvtermpath (
     foreign key (subject_id) references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     object_id int not null,
     foreign key (object_id) references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
-    cv_id int not null,
+    cv_id int,
     foreign key (cv_id) references cv (cv_id) on delete cascade INITIALLY DEFERRED,
     pathdistance int,
     constraint cvtermpath_c1 unique (subject_id,object_id,type_id,pathdistance)
@@ -149,7 +149,7 @@ AND the OBO_REL:is_a (subclass) relationship';
 
 COMMENT ON COLUMN cvtermpath.cv_id IS 'Closures will mostly be within
 one cv. If the closure of a relationship traverses a cv, then this
-refers to the cv of the object_id cvterm';
+refers to the cv of the subject_id cvterm';
 
 COMMENT ON COLUMN cvtermpath.pathdistance IS 'The number of steps
 required to get from the subject cvterm to the object cvterm, counting
@@ -159,6 +159,7 @@ create index cvtermpath_idx1 on cvtermpath (type_id);
 create index cvtermpath_idx2 on cvtermpath (subject_id);
 create index cvtermpath_idx3 on cvtermpath (object_id);
 create index cvtermpath_idx4 on cvtermpath (cv_id);
+CREATE INDEX cvtermpath_idx_subject_type_object ON cvtermpath(subject_id,type_id,object_id);
 
 create table cvtermsynonym (
     cvtermsynonym_id serial not null,
