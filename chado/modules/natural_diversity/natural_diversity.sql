@@ -7,7 +7,7 @@
 -- :import phenotype from phenotype
 -- :import organism from organism
 -- :import genotype from genetic
--- :import contact from contact
+-- :import contfc_act from contact
 -- :import project from general
 -- :import stock from stock
 -- :import synonym
@@ -16,7 +16,7 @@
 
 
 CREATE TABLE crossexperiment (
-    diversity_experiment_id integer NOT NULL,
+    diversityexperiment_id integer NOT NULL,
     name character varying(255) NOT NULL,
     expdate date,
     type_id integer NOT NULL
@@ -30,7 +30,7 @@ CREATE TABLE crossexperiment_stock (
     crossexperiment_stock_id integer NOT NULL,
     stock_id integer NOT NULL,
     type_id integer NOT NULL,
-    diversity_experiment_id integer NOT NULL
+    diversityexperiment_id integer NOT NULL
 );
 
 COMMENT ON TABLE crossexperiment_stock IS 'The parental stock(s) used in a crossexperiment. Some cross experiments are carried out by pairing multiple males to one or multiple female(s) so that the actual parent stocks of offspring may not necessarily be known a-priori. ';
@@ -46,30 +46,6 @@ CREATE SEQUENCE crossexperiment_stock_crossexperiment_stock_id_seq
 
 ALTER SEQUENCE crossexperiment_stock_crossexperiment_stock_id_seq OWNED BY crossexperiment_stock.crossexperiment_stock_id;
 
-CREATE TABLE crossexperimentprop (
-    crossexperimentprop_id integer NOT NULL,
-    cvterm_id integer NOT NULL,
-    value character varying(255),
-    rank integer DEFAULT 0 NOT NULL,
-    diversity_experiment_id integer NOT NULL
-);
-
-COMMENT ON TABLE crossexperimentprop IS 'Property/value associations for cross experiments.';
-
-COMMENT ON COLUMN crossexperimentprop.cvterm_id IS 'The name of the property as a reference to a controlled vocabulary term.';
-
-COMMENT ON COLUMN crossexperimentprop.value IS 'The value of the property.';
-
-COMMENT ON COLUMN crossexperimentprop.rank IS 'The rank of the property value, if the property has an array of values.';
-
-CREATE SEQUENCE crossexperimentprop_crossexperimentprop_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-ALTER SEQUENCE crossexperimentprop_crossexperimentprop_id_seq OWNED BY crossexperimentprop.crossexperimentprop_id;
 
 CREATE TABLE diversityexperiment (
     diversityexperiment_id integer NOT NULL,
@@ -111,19 +87,19 @@ CREATE SEQUENCE feature_gtassay_feature_gtassay_id_seq
 ALTER SEQUENCE feature_gtassay_feature_gtassay_id_seq OWNED BY feature_gtassay.feature_gtassay_id;
 
 CREATE TABLE fieldcollection (
-    diversity_experiment_id integer NOT NULL,
+    diversityexperiment_id integer NOT NULL,
     start_date timestamp without time zone,
     end_date timestamp without time zone NOT NULL,
     time_of_day character varying(10),
     collection_size integer NOT NULL
 );
 
-CREATE TABLE fieldcollectionprop (
-    fieldcollectionprop_id integer NOT NULL,
+CREATE TABLE diversityexperimentprop (
+    diversityexperimentprop_id integer NOT NULL,
     cvterm_id integer NOT NULL,
     value character varying(255) NOT NULL,
     rank integer NOT NULL,
-    diversity_experiment_id integer NOT NULL
+    diversityexperiment_id integer NOT NULL
 );
 
 CREATE TABLE geolocation (
@@ -276,7 +252,7 @@ CREATE SEQUENCE gtassayprop_gtassayprop_id_seq
 ALTER SEQUENCE gtassayprop_gtassayprop_id_seq OWNED BY gtassayprop.gtassayprop_id;
 
 CREATE TABLE gtexperiment (
-    diversity_experiment_id integer NOT NULL,
+    diversityexperiment_id integer NOT NULL,
     collection_date date NOT NULL,
     gtassay_id integer NOT NULL,
     genotype_id integer NOT NULL
@@ -362,7 +338,7 @@ CREATE SEQUENCE ptassayprop_ptassayprop_id_seq
 ALTER SEQUENCE ptassayprop_ptassayprop_id_seq OWNED BY ptassayprop.ptassayprop_id;
 
 CREATE TABLE ptexperiment (
-    diversity_experiment_id integer NOT NULL,
+    diversityexperiment_id integer NOT NULL,
     collection_date date NOT NULL,
     ptassay_id integer NOT NULL,
     phenotype_id integer NOT NULL,
@@ -494,7 +470,6 @@ ALTER SEQUENCE stocksampleprop_stocksampleprop_id_seq OWNED BY stocksampleprop.s
 
 ALTER TABLE crossexperiment_stock ALTER COLUMN crossexperiment_stock_id SET DEFAULT nextval('crossexperiment_stock_crossexperiment_stock_id_seq'::regclass);
 
-ALTER TABLE crossexperimentprop ALTER COLUMN crossexperimentprop_id SET DEFAULT nextval('crossexperimentprop_crossexperimentprop_id_seq'::regclass);
 
 ALTER TABLE diversityexperiment ALTER COLUMN diversityexperiment_id SET DEFAULT nextval('diversityexperiment_diversityexperiment_id_seq'::regclass);
 
@@ -527,13 +502,11 @@ ALTER TABLE stocksample ALTER COLUMN stocksample_id SET DEFAULT nextval('stocksa
 ALTER TABLE stocksampleprop ALTER COLUMN stocksampleprop_id SET DEFAULT nextval('stocksampleprop_stocksampleprop_id_seq'::regclass);
 
 ALTER TABLE ONLY crossexperiment
-    ADD CONSTRAINT crossexperiment_pkey PRIMARY KEY (diversity_experiment_id);
+    ADD CONSTRAINT crossexperiment_pkey PRIMARY KEY (diversityexperiment_id);
 
 ALTER TABLE ONLY crossexperiment_stock
     ADD CONSTRAINT crossexperiment_stock_pkey PRIMARY KEY (crossexperiment_stock_id);
 
-ALTER TABLE ONLY crossexperimentprop
-    ADD CONSTRAINT crossexperimentprop_pkey PRIMARY KEY (crossexperimentprop_id);
 
 ALTER TABLE ONLY diversityexperiment_project
     ADD CONSTRAINT diversityexperiment_project_id PRIMARY KEY (diversityexperiment_project_id);
@@ -545,10 +518,10 @@ ALTER TABLE ONLY feature_gtassay
     ADD CONSTRAINT feature_gtassay_pkey PRIMARY KEY (feature_gtassay_id);
 
 ALTER TABLE ONLY fieldcollection
-    ADD CONSTRAINT fieldcollection_id PRIMARY KEY (diversity_experiment_id);
+    ADD CONSTRAINT fieldcollection_id PRIMARY KEY (diversityexperiment_id);
 
-ALTER TABLE ONLY fieldcollectionprop
-    ADD CONSTRAINT fieldcollectionprop_id PRIMARY KEY (fieldcollectionprop_id);
+ALTER TABLE ONLY diversityexperimentprop
+    ADD CONSTRAINT diversityexperimentprop_id PRIMARY KEY (diversityexperimentprop_id);
 
 ALTER TABLE ONLY geolocation
     ADD CONSTRAINT geolocation_pkey PRIMARY KEY (geolocation_id);
@@ -566,7 +539,7 @@ ALTER TABLE ONLY gtassayprop
     ADD CONSTRAINT gtassayprop_pkey PRIMARY KEY (gtassayprop_id);
 
 ALTER TABLE ONLY gtexperiment
-    ADD CONSTRAINT gtexperiment_pkey PRIMARY KEY (diversity_experiment_id);
+    ADD CONSTRAINT gtexperiment_pkey PRIMARY KEY (diversityexperiment_id);
 
 ALTER TABLE ONLY image
     ADD CONSTRAINT image_pkey PRIMARY KEY (image_id);
@@ -581,7 +554,7 @@ ALTER TABLE ONLY ptassayprop
     ADD CONSTRAINT ptassayprop_pkey PRIMARY KEY (ptassayprop_id);
 
 ALTER TABLE ONLY ptexperiment
-    ADD CONSTRAINT ptexperiment_pkey PRIMARY KEY (diversity_experiment_id);
+    ADD CONSTRAINT ptexperiment_pkey PRIMARY KEY (diversityexperiment_id);
 
 ALTER TABLE ONLY reagent
     ADD CONSTRAINT reagent_pkey PRIMARY KEY (reagent_id);
@@ -602,7 +575,6 @@ CREATE UNIQUE INDEX crossexperiment_c1 ON crossexperiment USING btree (name);
 
 CREATE UNIQUE INDEX crossexperiment_stock_c1 ON crossexperiment_stock USING btree (stock_id);
 
-CREATE UNIQUE INDEX crossexperimentprop_c1 ON crossexperimentprop USING btree (cvterm_id, rank);
 
 CREATE UNIQUE INDEX feature_gtassay_c1 ON feature_gtassay USING btree (feature_id, gtassay_id);
 
@@ -635,25 +607,23 @@ CREATE UNIQUE INDEX stocksample_c1 ON stocksample USING btree (name);
 CREATE UNIQUE INDEX stocksampleprop_c1 ON stocksampleprop USING btree (stocksample_id, cvterm_id, rank);
 
 ALTER TABLE ONLY crossexperiment_stock
-    ADD CONSTRAINT crossexperiment_crossexperiment_stock_fk FOREIGN KEY (diversity_experiment_id) REFERENCES crossexperiment(diversity_experiment_id);
+    ADD CONSTRAINT crossexperiment_crossexperiment_stock_fk FOREIGN KEY (diversityexperiment_id) REFERENCES crossexperiment(diversityexperiment_id);
 
-ALTER TABLE ONLY crossexperimentprop
-    ADD CONSTRAINT crossexperiment_crossexperimentprop_fk FOREIGN KEY (diversity_experiment_id) REFERENCES crossexperiment(diversity_experiment_id);
 
 ALTER TABLE ONLY crossexperiment
-    ADD CONSTRAINT diversity_experiment_crossexperiment_fk FOREIGN KEY (diversity_experiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
+    ADD CONSTRAINT diversityexperiment_crossexperiment_fk FOREIGN KEY (diversityexperiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
 
 ALTER TABLE ONLY fieldcollection
-    ADD CONSTRAINT diversity_experiment_field_collection_fk FOREIGN KEY (diversity_experiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
+    ADD CONSTRAINT diversityexperiment_fieldcollection_fk FOREIGN KEY (diversityexperiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
 
 ALTER TABLE ONLY diversityexperiment
-    ADD CONSTRAINT diversity_experiment_geolocation_fk FOREIGN KEY (geolocation_id) REFERENCES geolocation(geolocation_id);
+    ADD CONSTRAINT diversityexperiment_geolocation_fk FOREIGN KEY (geolocation_id) REFERENCES geolocation(geolocation_id);
 
 ALTER TABLE ONLY gtexperiment
-    ADD CONSTRAINT diversity_experiment_gtexperiment_fk FOREIGN KEY (diversity_experiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
+    ADD CONSTRAINT diversityexperiment_gtexperiment_fk FOREIGN KEY (diversityexperiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
 
 ALTER TABLE ONLY ptexperiment
-    ADD CONSTRAINT diversity_experiment_ptexperiment_fk FOREIGN KEY (diversity_experiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
+    ADD CONSTRAINT diversityexperiment_ptexperiment_fk FOREIGN KEY (diversityexperiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
 
 ALTER TABLE ONLY diversityexperiment_project
     ADD CONSTRAINT diversityexperiment_diversityexperiment_project_fk FOREIGN KEY (diversityexperiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
@@ -661,8 +631,8 @@ ALTER TABLE ONLY diversityexperiment_project
 ALTER TABLE ONLY feature_gtassay
     ADD CONSTRAINT feature_gtassay_gtassay_id_fkey FOREIGN KEY (gtassay_id) REFERENCES gtassay(gtassay_id) ON DELETE CASCADE;
 
-ALTER TABLE ONLY fieldcollectionprop
-    ADD CONSTRAINT field_collection_fc_prop_fk FOREIGN KEY (diversity_experiment_id) REFERENCES fieldcollection(diversity_experiment_id);
+ALTER TABLE ONLY diversityexperimentprop
+    ADD CONSTRAINT diversityexperiment_diversityexperimentprop_fk FOREIGN KEY (diversityexperiment_id) REFERENCES diversityexperiment(diversityexperiment_id);
 
 ALTER TABLE ONLY geolocationprop
     ADD CONSTRAINT geolocation_geolocationprop_fk FOREIGN KEY (geolocation_id) REFERENCES geolocation(geolocation_id);
