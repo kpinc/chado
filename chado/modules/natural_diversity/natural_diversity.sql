@@ -253,12 +253,9 @@ ALTER SEQUENCE gtassayprop_gtassayprop_id_seq OWNED BY gtassayprop.gtassayprop_i
 
 CREATE TABLE gtexperiment (
     diversityexperiment_id integer NOT NULL,
-    collection_date date NOT NULL,
     gtassay_id integer NOT NULL,
     genotype_id integer NOT NULL
 );
-
-COMMENT ON COLUMN gtexperiment.collection_date IS 'Date that the sample was collected';
 
 COMMENT ON COLUMN gtexperiment.gtassay_id IS 'The genotyping assay used to determine the genotype.';
 
@@ -339,13 +336,10 @@ ALTER SEQUENCE ptassayprop_ptassayprop_id_seq OWNED BY ptassayprop.ptassayprop_i
 
 CREATE TABLE ptexperiment (
     diversityexperiment_id integer NOT NULL,
-    collection_date date NOT NULL,
     ptassay_id integer NOT NULL,
     phenotype_id integer NOT NULL,
     ptassay_reagent_id integer NOT NULL
 );
-
-COMMENT ON COLUMN ptexperiment.collection_date IS 'Date that the sample was collected';
 
 COMMENT ON COLUMN ptexperiment.ptassay_id IS 'The phenotyping assay used to determine the phenotype.';
 
@@ -584,7 +578,7 @@ CREATE UNIQUE INDEX gtassay_reagent_c1 ON gtassay_reagent USING btree (gtassay_i
 
 CREATE UNIQUE INDEX gtassayprop_c1 ON gtassayprop USING btree (gtassay_id, cvterm_id, rank);
 
-CREATE UNIQUE INDEX gtexperiment_c1 ON gtexperiment USING btree (collection_date, gtassay_id, genotype_id);
+CREATE UNIQUE INDEX gtexperiment_c1 ON gtexperiment USING btree (gtassay_id, genotype_id);
 
 CREATE UNIQUE INDEX image_c1 ON image USING btree (identifier);
 
@@ -594,7 +588,7 @@ CREATE UNIQUE INDEX ptassay_name_key ON ptassay USING btree (name);
 
 CREATE UNIQUE INDEX ptassayprop_c1 ON ptassayprop USING btree (ptassay_id, cvterm_id, rank);
 
-CREATE UNIQUE INDEX ptexperiment_c1 ON ptexperiment USING btree (collection_date, ptassay_id, phenotype_id);
+CREATE UNIQUE INDEX ptexperiment_c1 ON ptexperiment USING btree (ptassay_id, phenotype_id);
 
 CREATE UNIQUE INDEX reagent_c1 ON reagent USING btree (name, type_id);
 
