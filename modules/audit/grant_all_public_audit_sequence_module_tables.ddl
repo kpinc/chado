@@ -1,0 +1,20 @@
+   GRANT ALL ON feature_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON featureloc_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON featureloc_pub_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_pub_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_pubprop_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON featureprop_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON featureprop_pub_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_dbxref_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_dbxrefpropaudit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_relationship_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_relationship_pub_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_relationshipprop_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_relationshipprop_pub_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_cvterm_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_cvtermprop_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_cvterm_dbxref_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_cvterm_pub_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON synonym_audit_ud_tbl TO PUBLIC;
+   GRANT ALL ON feature_synonym_audit_ud_tbl TO PUBLIC;
+
