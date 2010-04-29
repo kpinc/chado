@@ -176,8 +176,9 @@ CREATE TABLE nd_diversityexperiment_phenotype (
     diversityexperiment_phenotype_id integer NOT NULl,
     diversityexperiment_id integer NOT NULL,
     phenotype_id integer NOT NULL,
-    assay_id integer
-);
+    phenotyping date timestamp,
+    assay_id integer 
+); 
 
 COMMENT ON TABLE nd_diversityexperiment_phenotype IS 'Linking table: diversityexperiments to the phenotypes they produce.';
 
