@@ -145,12 +145,13 @@ CREATE TABLE stock_relationship_cvterm (
 	stock_relationship_cvterm_id SERIAL NOT NULL,
 	PRIMARY KEY (stock_relationship_cvterm_id),
 	stock_relatiohship_id integer NOT NULL,
-	FOREIGN KEY (stock_relationship_id) references stock_relationship (stock_relationship_id) ON DELETE CASCADE,cvterm_id integer NOT NULL,
+	--FOREIGN KEY (stock_relationship_id) references stock_relationship (stock_relationship_id) ON DELETE CASCADE INITIALLY DEFERRED,
+	cvterm_id integer NOT NULL,
 	FOREIGN KEY (cvterm_id) REFERENCES cvterm (cvterm_id) ON DELETE RESTRICT,
 	pub_id integer,
-	FOREIGN KEY (pub_id) REFERENCES pub (pub_id)ON DELETE RESTRICT
+	FOREIGN KEY (pub_id) REFERENCES pub (pub_id) ON DELETE RESTRICT
 );
-COMMENT ON TABLE stock_relationship_cvterm is "For germplasm maintenance and pedigree data, stock_relationship.type_id will record cvterms such as 'is a female parent of', 'a parent for mutation', 'is a group_id of', 'is a source_id of', etc The cvterms for higher categories such as 'generative', 'derivative' or 'maintenance' can be stored in table stock_relationship_cvterm";
+COMMENT ON TABLE stock_relationship_cvterm is 'For germplasm maintenance and pedigree data, stock_relationship. type_id will record cvterms such as "is a female parent of", "a parent for mutation", "is a group_id of", "is a source_id of", etc The cvterms for higher categories such as "generative", "derivative" or "maintenance" can be stored in table stock_relationship_cvterm';
 
 
 -- ================================================
@@ -160,7 +161,7 @@ COMMENT ON TABLE stock_relationship_cvterm is "For germplasm maintenance and ped
 create table stock_relationship_pub (
       stock_relationship_pub_id serial not null,
       primary key (stock_relationship_pub_id),
-      stock_relationship_id int not null,
+      stock_relationship_id integer not null,
       foreign key (stock_relationship_id) references stock_relationship (stock_relationship_id) on delete cascade INITIALLY DEFERRED,
       pub_id int not null,
       foreign key (pub_id) references pub (pub_id) on delete cascade INITIALLY DEFERRED,
