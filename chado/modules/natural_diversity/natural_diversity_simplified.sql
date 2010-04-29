@@ -16,7 +16,8 @@
 CREATE TABLE nd_diversityexperiment (
     diversityexperiment_id integer NOT NULL,
     geolocation_id integer NOT NULL,
-    stocksample_id integer NOT NULL
+    stocksample_id integer NOT NULL,
+    date timestamp with timezone 
 );
 
 CREATE SEQUENCE nd_diversityexperiment_diversityexperiment_id_seq
@@ -174,7 +175,8 @@ ALTER SEQUENCE nd_assayprop_assayprop_id_seq OWNED BY nd_assayprop.assayprop_id;
 CREATE TABLE nd_diversityexperiment_phenotype (
     diversityexperiment_phenotype_id integer NOT NULl,
     diversityexperiment_id integer NOT NULL,
-    phenotype_id integer NOT NULL
+    phenotype_id integer NOT NULL,
+    assay_id integer
 );
 
 COMMENT ON TABLE nd_diversityexperiment_phenotype IS 'Linking table: diversityexperiments to the phenotypes they produce.';
@@ -182,7 +184,8 @@ COMMENT ON TABLE nd_diversityexperiment_phenotype IS 'Linking table: diversityex
 CREATE TABLE nd_diversityexperiment_genotype (
     diversityexperiment_genotype_id integer NOT NULL,
     diversityexperiment_id integer NOT NULL,
-    genotype_id integer NOT NULL
+    genotype_id integer NOT NULL,
+    assay_id integer
 );
 
 COMMENT ON TABLE nd_diversityexperiment_genotype IS 'Linking table: diversityexperiments to the genotypes they produce.';
