@@ -18,15 +18,15 @@
 --used to be nd_diversityexperiemnt_project
 CREATE TABLE nd_assay_project (
     assay_project_id serial PRIMARY KEY NOT NULL,
-    project_id integer,
-    assay_id integer NOT NULL
+    project_id integer references project (project_id) on delete cascade INITIALLY DEFERRED,
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED
 );
 
 
 
 CREATE TABLE nd_assayprop (
     assayprop_id serial PRIMARY KEY NOT NULL,
-    assay_id integer NOT NULL,
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED ,
     value character varying(255) NOT NULL,
     rank integer NOT NULL,
@@ -82,8 +82,8 @@ COMMENT ON COLUMN nd_geolocationprop.rank IS 'The rank of the property value, if
 
 CREATE TABLE nd_protocol_reagent (
     protocol_reagent_id serial PRIMARY KEY NOT NULL,
-    protocol_id integer NOT NULL,
-    reagent_id integer NOT NULL,
+    protocol_id integer NOT NULL references protocol (protocol_id) on delete cascade INITIALLY DEFERRED,
+    reagent_id integer NOT NULL references nd_reagent (reagent_id) on delete cascade INITIALLY DEFERRED,
     type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED
 );
 
@@ -100,7 +100,7 @@ COMMENT ON COLUMN nd_protocol.name IS 'The protocol name.';
 
 CREATE TABLE nd_protocolprop (
     protocolprop_id serial PRIMARY KEY NOT NULL,
-    protocol_id integer NOT NULL,
+    protocol_id integer NOT NULL references protocol (protocol_id) on delete cascade INITIALLY DEFERRED,
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(255),
     rank integer DEFAULT 0 NOT NULL,
@@ -121,7 +121,7 @@ COMMENT ON COLUMN nd_protocolprop.rank IS 'The rank of the property value, if th
 
 CREATE TABLE nd_assay_stock (
     assay_stock_id serial PRIMARY KEY NOT NULL,
-   
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
     stock_id integer NOT NULL references stock (stock_id)  on delete cascade INITIALLY DEFERRED,
     type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED
 );
@@ -130,7 +130,6 @@ COMMENT ON TABLE nd_assay_stock IS 'Part of a stock or a clone of a stock that i
 
 
 COMMENT ON COLUMN nd_assay_stock.stock_id IS 'stock used in the extraction or the corresponding stock for the clone';
-
 
 
 
@@ -161,7 +160,7 @@ COMMENT ON COLUMN nd_reagent.feature_id IS 'If the reagent is a primer, the feat
 CREATE TABLE nd_assay_protocol (
     assay_protocol_id serial PRIMARY KEY NOT NULL,
     assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
-    protocol_id integer NOT NULL
+    protocol_id integer NOT NULL references protocol (protocol_id) on delete cascade INITIALLY DEFERRED
 );
 
 COMMENT ON TABLE nd_assay_protocol IS 'Linking table: assays to the protocols they involve.';
@@ -173,8 +172,7 @@ CREATE TABLE nd_assay_phenotype (
     phenotype_id integer NOT NULL references phenotype (phenotype_id) on delete cascade INITIALLY DEFERRED
 ); 
 
-COMMENT ON TABLE nd_assay_phenotype IS 'Linking table: assays to the phenotypes they produce.';
-
+COMMENT ON TABLE nd_assay_phenotype IS 'Linking table: assays to the phenotypes they produce. There is a one-to-one relationship between an assay and a phenotype since each phenotype record should point to one assay. Add a new assay_id for each phenotype record.';
 
 CREATE TABLE nd_assay_genotype (
     assay_genotype_id serial PRIMARY KEY NOT NULL,
@@ -182,7 +180,7 @@ CREATE TABLE nd_assay_genotype (
     genotype_id integer NOT NULL references genotype (genotype_id) on delete cascade INITIALLY DEFERRED 
 );
 
-COMMENT ON TABLE nd_assay_genotype IS 'Linking table: assays to the genotypes they produce.';
+COMMENT ON TABLE nd_assay_genotype IS 'Linking table: assays to the genotypes they produce. There is a one-to-one relationship between an assay and a genotype since each genotype record should point to one assay. Add a new assay_id for each genotype record.';
 
 
 CREATE TABLE nd_reagent_relationship (
@@ -237,4 +235,15 @@ CREATE TABLE nd_assay_stock_dbxref (
 );
 
 COMMENT ON TABLE nd_assay_stock_dbxref IS 'Cross-reference assay_stock to accessions, images, etc';
+
+
+
+CREATE TABLE nd_assay_dbxref (
+    assay_dbxref_id serial PRIMARY KEY NOT NULL,
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
+    dbxref_id integer NOT NULL references dbxref (dbxref_id) on delete cascade INITIALLY DEFERRED
+);
+
+COMMENT ON TABLE nd_assay_dbxref IS 'Cross-reference assay to accessions, images, etc';
+
 
