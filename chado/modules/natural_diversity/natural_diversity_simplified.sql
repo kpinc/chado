@@ -14,27 +14,6 @@
 -- =================================================================
 
 
---
---used to be nd_diversityexperiemnt_project
-CREATE TABLE nd_assay_project (
-    assay_project_id serial PRIMARY KEY NOT NULL,
-    project_id integer references project (project_id) on delete cascade INITIALLY DEFERRED,
-    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED
-);
-
-
-
-CREATE TABLE nd_assayprop (
-    assayprop_id serial PRIMARY KEY NOT NULL,
-    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
-    cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED ,
-    value character varying(255) NOT NULL,
-    rank integer NOT NULL,
-    constraint assayprop_c1 unique (assay_id,cvterm_id,rank)
-);
-
-
-
 -- this probably needs some work, depending on how cross-database we
 -- want to be.  In Postgres, at least, there are much better ways to 
 -- represent geo information.
@@ -62,6 +41,34 @@ COMMENT ON COLUMN nd_geolocation.geodetic_datum IS 'The geodetic system on which
 COMMENT ON COLUMN nd_geolocation.altitude IS 'The altitude (elevation) of the location in meters. If the altitude is only known as a range, this is the average, and altitude_dev will hold half of the width of the range.';
 
 
+
+CREATE TABLE nd_assay (
+    assay_id serial PRIMARY KEY NOT NULL,
+    geolocation_id integer NOT NULL references nd_geolocation (geolocation_id) on delete cascade INITIALLY DEFERRED,
+    type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED 
+);
+
+--
+--used to be nd_diversityexperiemnt_project
+CREATE TABLE nd_assay_project (
+    assay_project_id serial PRIMARY KEY NOT NULL,
+    project_id integer references project (project_id) on delete cascade INITIALLY DEFERRED,
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED
+);
+
+
+
+CREATE TABLE nd_assayprop (
+    assayprop_id serial PRIMARY KEY NOT NULL,
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
+    cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED ,
+    value character varying(255) NOT NULL,
+    rank integer NOT NULL,
+    constraint assayprop_c1 unique (assay_id,cvterm_id,rank)
+);
+
+
+
 CREATE TABLE nd_geolocationprop (
     geolocationprop_id serial PRIMARY KEY NOT NULL,
     geolocation_id integer NOT NULL references nd_geolocation (geolocation_id) on delete cascade INITIALLY DEFERRED,
@@ -80,14 +87,6 @@ COMMENT ON COLUMN nd_geolocationprop.value IS 'The value of the property.';
 COMMENT ON COLUMN nd_geolocationprop.rank IS 'The rank of the property value, if the property has an array of values.';
 
 
-CREATE TABLE nd_protocol_reagent (
-    protocol_reagent_id serial PRIMARY KEY NOT NULL,
-    protocol_id integer NOT NULL references protocol (protocol_id) on delete cascade INITIALLY DEFERRED,
-    reagent_id integer NOT NULL references nd_reagent (reagent_id) on delete cascade INITIALLY DEFERRED,
-    type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED
-);
-
-
 CREATE TABLE nd_protocol (
     protocol_id serial PRIMARY KEY  NOT NULL,
     name character varying(255) NOT NULL unique
@@ -97,10 +96,34 @@ COMMENT ON TABLE nd_protocol IS 'A protocol can be anything that is done as part
 
 COMMENT ON COLUMN nd_protocol.name IS 'The protocol name.';
 
+CREATE TABLE nd_reagent (
+    reagent_id serial PRIMARY KEY NOT NULL,
+    name character varying(80) NOT NULL,
+    type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
+    feature_id integer
+);
+
+COMMENT ON TABLE nd_reagent IS 'A reagent such as a primer, an enzyme, an adapter oligo, a linker oligo. Reagents are used in genotyping assays, or in any other kind of assay.';
+
+COMMENT ON COLUMN nd_reagent.name IS 'The name of the reagent. The name should be unique for a given type.';
+
+COMMENT ON COLUMN nd_reagent.type_id IS 'The type of the reagent, for example linker oligomer, or forward primer.';
+
+COMMENT ON COLUMN nd_reagent.feature_id IS 'If the reagent is a primer, the feature that it corresponds to. More generally, the corresponding feature for any reagent that has a sequence that maps to another sequence.';
+
+
+
+CREATE TABLE nd_protocol_reagent (
+    protocol_reagent_id serial PRIMARY KEY NOT NULL,
+    protocol_id integer NOT NULL references nd_protocol (protocol_id) on delete cascade INITIALLY DEFERRED,
+    reagent_id integer NOT NULL references nd_reagent (reagent_id) on delete cascade INITIALLY DEFERRED,
+    type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED
+);
+
 
 CREATE TABLE nd_protocolprop (
     protocolprop_id serial PRIMARY KEY NOT NULL,
-    protocol_id integer NOT NULL references protocol (protocol_id) on delete cascade INITIALLY DEFERRED,
+    protocol_id integer NOT NULL references nd_protocol (protocol_id) on delete cascade INITIALLY DEFERRED,
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(255),
     rank integer DEFAULT 0 NOT NULL,
@@ -132,35 +155,10 @@ COMMENT ON TABLE nd_assay_stock IS 'Part of a stock or a clone of a stock that i
 COMMENT ON COLUMN nd_assay_stock.stock_id IS 'stock used in the extraction or the corresponding stock for the clone';
 
 
-
-CREATE TABLE nd_assay (
-    assay_id serial PRIMARY KEY NOT NULL,
-    geolocation_id integer NOT NULL references nd_geolocation (geolocation_id) on delete cascade INITIALLY DEFERRED,
-    assay_stock_id integer NOT NULL references nd_assay_stock (assay_stock_id) on delete cascade INITIALLY DEFERRED,
-    type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED 
-);
-
-
-CREATE TABLE nd_reagent (
-    reagent_id serial PRIMARY KEY NOT NULL,
-    name character varying(80) NOT NULL,
-    type_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
-    feature_id integer
-);
-
-COMMENT ON TABLE nd_reagent IS 'A reagent such as a primer, an enzyme, an adapter oligo, a linker oligo. Reagents are used in genotyping assays, or in any other kind of assay.';
-
-COMMENT ON COLUMN nd_reagent.name IS 'The name of the reagent. The name should be unique for a given type.';
-
-COMMENT ON COLUMN nd_reagent.type_id IS 'The type of the reagent, for example linker oligomer, or forward primer.';
-
-COMMENT ON COLUMN nd_reagent.feature_id IS 'If the reagent is a primer, the feature that it corresponds to. More generally, the corresponding feature for any reagent that has a sequence that maps to another sequence.';
-
-
 CREATE TABLE nd_assay_protocol (
     assay_protocol_id serial PRIMARY KEY NOT NULL,
     assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
-    protocol_id integer NOT NULL references protocol (protocol_id) on delete cascade INITIALLY DEFERRED
+    protocol_id integer NOT NULL references nd_protocol (protocol_id) on delete cascade INITIALLY DEFERRED
 );
 
 COMMENT ON TABLE nd_assay_protocol IS 'Linking table: assays to the protocols they involve.';
