@@ -64,7 +64,7 @@ CREATE TABLE nd_assayprop (
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED ,
     value character varying(255) NOT NULL,
     rank integer NOT NULL,
-    constraint assayprop_c1 unique (assay_id,cvterm_id,rank)
+    constraint nd_assayprop_c1 unique (assay_id,cvterm_id,rank)
 );
 
 
@@ -75,7 +75,7 @@ CREATE TABLE nd_geolocationprop (
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(250) NOT NULL,
     rank integer NOT NULL,
-    constraint geolocationprop_c1 unique (geolocation_id,cvterm_id,rank)
+    constraint nd_geolocationprop_c1 unique (geolocation_id,cvterm_id,rank)
 );
 
 COMMENT ON TABLE nd_geolocationprop IS 'Property/value associations for geolocations. This table can store the properties such as location and environment';
@@ -127,7 +127,7 @@ CREATE TABLE nd_protocolprop (
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(255),
     rank integer DEFAULT 0 NOT NULL,
-    constraint protocolprop_c1 unique (protocol_id,cvterm_id,rank)
+    constraint nd_protocolprop_c1 unique (protocol_id,cvterm_id,rank)
 );
 
 COMMENT ON TABLE nd_protocolprop IS 'Property/value associations for protocol.';
@@ -203,7 +203,7 @@ CREATE TABLE nd_reagentprop (
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(255),
     rank integer DEFAULT 0 NOT NULL,
-    constraint reagentprop_c1 unique (reagent_id,cvterm_id,rank)
+    constraint nd_reagentprop_c1 unique (reagent_id,cvterm_id,rank)
 );
 
 CREATE TABLE nd_assay_stockprop (
@@ -212,7 +212,7 @@ CREATE TABLE nd_assay_stockprop (
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(255),
     rank integer DEFAULT 0 NOT NULL,
-    constraint assay_stockprop_c1 unique (assay_stock_id,cvterm_id,rank)
+    constraint nd_assay_stockprop_c1 unique (assay_stock_id,cvterm_id,rank)
 );
 
 COMMENT ON TABLE nd_assay_stockprop IS 'Property/value associations for assay_stocks. This table can store the properties such as treatment';
