@@ -52,7 +52,7 @@ CREATE TABLE nd_assay (
 --used to be nd_diversityexperiemnt_project
 CREATE TABLE nd_assay_project (
     assay_project_id serial PRIMARY KEY NOT NULL,
-    project_id integer references project (project_id) on delete cascade INITIALLY DEFERRED,
+    project_id integer not null references project (project_id) on delete cascade INITIALLY DEFERRED,
     assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE nd_assayprop (
     assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED ,
     value character varying(255) NOT NULL,
-    rank integer NOT NULL,
+    rank integer NOT NULL default 0,
     constraint nd_assayprop_c1 unique (assay_id,cvterm_id,rank)
 );
 
@@ -73,7 +73,7 @@ CREATE TABLE nd_geolocationprop (
     geolocationprop_id serial PRIMARY KEY NOT NULL,
     geolocation_id integer NOT NULL references nd_geolocation (geolocation_id) on delete cascade INITIALLY DEFERRED,
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
-    value character varying(250) NOT NULL,
+    value character varying(250),
     rank integer NOT NULL,
     constraint nd_geolocationprop_c1 unique (geolocation_id,cvterm_id,rank)
 );
