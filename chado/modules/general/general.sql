@@ -114,3 +114,18 @@ CREATE TABLE project_relationship (
 );
 COMMENT ON TABLE project_relationship IS 'A project can be composed of several smaller scale projects';
 COMMENT ON COLUMN project_relationship.type_id IS 'The type of relationship being stated, such as "is part of".';
+
+
+create table project_pub (
+       project_pub_id serial not null,
+       primary key (project_pub_id),
+       project_id int not null,
+       foreign key (project_id) references project (project_id) on delete cascade INITIALLY DEFERRED,
+       pub_id int not null,
+       foreign key (pub_id) references pub (pub_id) on delete cascade INITIALLY DEFERRED,
+       constraint project_pub_c1 unique (project_id,pub_id)
+);
+create index project_pub_idx1 on project_pub (project_id);
+create index project_pub_idx2 on project_pub (pub_id);
+
+COMMENT ON TABLE project_pub IS 'Linking project(s) to publication(s)';

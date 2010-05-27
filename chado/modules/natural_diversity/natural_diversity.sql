@@ -9,6 +9,9 @@
 -- :import genotype from genetic
 -- :import contfc_act from contact
 -- :import project from general
+-- :import project_relationship from general
+-- :import project_pub from general
+-- :import projectprop from general
 -- :import stock from stock
 -- :import synonym
 -- =================================================================
@@ -66,6 +69,21 @@ CREATE TABLE nd_assayprop (
     rank integer NOT NULL default 0,
     constraint nd_assayprop_c1 unique (assay_id,cvterm_id,rank)
 );
+
+create table nd_assay_pub (
+       assay_pub_id serial not null,
+       primary key (nd_assay_pub_id),
+       assay_id int not null,
+       foreign key (assay_id) references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
+       pub_id int not null,
+       foreign key (pub_id) references pub (pub_id) on delete cascade INITIALLY DEFERRED,
+       constraint assay_pub_c1 unique (assay_id,pub_id)
+);
+create index assay_pub_idx1 on nd_assay_pub (assay_id);
+create index assay_pub_idx2 on nd_assay_pub (pub_id);
+
+COMMENT ON TABLE nd_assay_pub IS 'Linking nd_assay(s) to publication(s)';
+
 
 
 
