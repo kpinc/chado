@@ -129,3 +129,18 @@ create index project_pub_idx1 on project_pub (project_id);
 create index project_pub_idx2 on project_pub (pub_id);
 
 COMMENT ON TABLE project_pub IS 'Linking project(s) to publication(s)';
+
+
+create table project_contact (
+       project_contact_id serial not null,
+       primary key (project_contact_id),
+       project_id int not null,
+       foreign key (project_id) references project (project_id) on delete cascade INITIALLY DEFERRED,
+       contact_id int not null,
+       foreign key (contact_id) references contact (contact_id) on delete cascade INITIALLY DEFERRED,
+       constraint project_contact_c1 unique (project_id,contact_id)
+);
+create index project_contact_idx1 on project_contact (project_id);
+create index project_contact_idx2 on project_contact (contact_id);
+
+COMMENT ON TABLE project_contact IS 'Linking project(s) to contact(s)';
