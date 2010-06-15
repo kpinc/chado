@@ -263,3 +263,8 @@ CREATE TABLE nd_assay_dbxref (
 COMMENT ON TABLE nd_assay_dbxref IS 'Cross-reference assay to accessions, images, etc';
 
 
+CREATE TABLE nd_assay_contact (
+    assay_contact_id serial PRIMARY KEY NOT NULL,
+    assay_id integer NOT NULL references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
+    contact_id integer NOT NULL references contact (contact_id) on delete cascade INITIALLY DEFERRED
+);
