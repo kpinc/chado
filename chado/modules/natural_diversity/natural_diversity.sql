@@ -7,11 +7,8 @@
 -- :import phenotype from phenotype
 -- :import organism from organism
 -- :import genotype from genetic
--- :import contfc_act from contact
--- :import project from general
--- :import project_relationship from general
--- :import project_pub from general
--- :import projectprop from general
+-- :import contact from contact
+-- :import project from project
 -- :import stock from stock
 -- :import synonym
 -- =================================================================
@@ -72,7 +69,7 @@ CREATE TABLE nd_assayprop (
 
 create table nd_assay_pub (
        assay_pub_id serial not null,
-       primary key (nd_assay_pub_id),
+       primary key (assay_pub_id),
        assay_id int not null,
        foreign key (assay_id) references nd_assay (assay_id) on delete cascade INITIALLY DEFERRED,
        pub_id int not null,
