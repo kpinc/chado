@@ -579,7 +579,7 @@
     <module id='project'>
       <dependency to="cv"/>
       <dependency to="contact"/>
-      <dependency to="project"/>
+      <dependency to="pub"/>
       <status code='beta'>
       </status>
       <description>
