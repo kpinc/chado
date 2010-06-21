@@ -606,6 +606,8 @@ graphviz :: \
 	make $working_dir/modules/sequence/sequence.graphviz.png \
 	make $working_dir/modules/www/www.graphviz.png \
 	make $working_dir/modules/stock/stock.graphviz.png \
+	make $working_dir/modules/project/project.graphviz.png \
+	make $working_dir/modules/natural_diversity/natural_diversity.graphviz.png \
 	make $working_dir/modules/nofuncs.graphviz.png
 
 graphviz_svg :: \
@@ -626,6 +628,8 @@ graphviz_svg :: \
 	make $working_dir/modules/sequence/sequence.graphviz.svg \
 	make $working_dir/modules/www/www.graphviz.svg \
 	make $working_dir/modules/stock/stock.graphviz.svg \
+	make $working_dir/modules/project/project.graphviz.svg \
+	make $working_dir/modules/natural_diversity/natural_diversity.graphviz.svg \
 	make $working_dir/modules/nofuncs.graphviz.svg
 
 diagram :: \
@@ -646,6 +650,8 @@ diagram :: \
 	make $working_dir/modules/sequence/sequence.diagram.png \
 	make $working_dir/modules/www/www.diagram.png \
 	make $working_dir/modules/stock/stock.diagram.png \
+	make $working_dir/modules/project/project.diagram.png \
+	make $working_dir/modules/natural_diversity/natural_diversity.diagram.png \
 	make $working_dir/modules/nofuncs.diagram.png
 
 
@@ -668,6 +674,8 @@ html :: \
 	make $working_dir/modules/sequence/sequence.html \
 	make $working_dir/modules/www/www.html \
 	make $working_dir/modules/stock/stock.html \
+	make $working_dir/modules/project/project.html \
+	make $working_dir/modules/natural_diversity/natural_diversity.html \
 	make $working_dir/modules/nofuncs.html
 
 tex :: \
@@ -689,6 +697,8 @@ tex :: \
 	make $working_dir/modules/sequence/sequence.tex \
 	make $working_dir/modules/www/www.tex \
 	make $working_dir/modules/stock/stock.tex \
+	make $working_dir/modules/project/project.tex \
+	make $working_dir/modules/natural_diversity/natural_diversity.tex \
 	make $working_dir/modules/nofuncs.tex
 
 %.html: %.sql
