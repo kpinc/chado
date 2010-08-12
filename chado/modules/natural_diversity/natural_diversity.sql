@@ -49,7 +49,7 @@ CREATE TABLE nd_experiment (
 );
 
 --
---used to be nd_diversityexperiemnt_project
+--used to be nd_diversityexperiment_project
 --then was nd_assay_project
 CREATE TABLE nd_experiment_project (
     nd_experiment_project_id serial PRIMARY KEY NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE nd_geolocationprop (
     nd_geolocation_id integer NOT NULL references nd_geolocation (nd_geolocation_id) on delete cascade INITIALLY DEFERRED,
     cvterm_id integer NOT NULL references cvterm (cvterm_id) on delete cascade INITIALLY DEFERRED,
     value character varying(250),
-    rank integer NOT NULL,
+    rank integer NOT NULL DEFAULT 0,
     constraint nd_geolocationprop_c1 unique (nd_geolocation_id,cvterm_id,rank)
 );
 
