@@ -28,7 +28,7 @@ CREATE TABLE phenotype (
     cvalue_id INT,
     FOREIGN KEY (cvalue_id) REFERENCES cvterm (cvterm_id) ON DELETE SET NULL,
     assay_id INT,
-    FOREIGN KEY (assay_id) REFERENCES cvterm (cvterm_id) ON DELETE SET NULL,
+    FOREIGN KEY (assay_id) REFERENCES cvterm (cvterm_id) ON DELETE SET NULL
 );
 CREATE INDEX phenotype_idx1 ON phenotype (cvalue_id);
 CREATE INDEX phenotype_idx2 ON phenotype (observable_id);
@@ -52,8 +52,7 @@ CREATE TABLE phenotypeprop (
     phenotypeprop_id serial NOT NULL,                                       
     PRIMARY KEY (phenotypeprop_id),                                         
     phenotype_id integer NOT NULL,                                          
-    FOREIGN KEY (phenotype_id) REFERENCES phenotype (phenotype_id) ON DELET\
-E CASCADE,                                                                      
+    FOREIGN KEY (phenotype_id) REFERENCES phenotype (phenotype_id) ON DELETE CASCADE,                                                                      
     type_id integer NOT NULL,                                               
     FOREIGN KEY (type_id) REFERENCES cvterm (cvterm_id) ON DELETE CASCADE,  
     value text,                                                             
