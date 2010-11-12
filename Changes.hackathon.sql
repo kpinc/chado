@@ -4,8 +4,12 @@
 
 --gmod version 1.01
 
---updates to phenotype table resulting from GMOD hackathon '10
+--updates to phenotype module  resulting from GMOD hackathon '10
 --removal of unique constraint from 'uniquename' column (yes, really)
+--addition of units_id col
+--creation of new phenotypeprop table
+--optional migration path from phenotype_cvterm to phenotypeprop
+
 ALTER TABLE phenotype ALTER uniquename DROP NOT NULL;
 ALTER TABLE phenotype DROP CONSTRAINT phenotype_c1;
 ALTER TABLE phenotype ADD units_id INT;
