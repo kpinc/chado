@@ -48,6 +48,8 @@ Items to do with Postgres to make it ready to go:
         $ createlang plpgsql template1
         $ exit                     # to exit out of the postgres user's shell
 
+      (NOTE: plpgsql is installed automatically in postgres 9.0+.)
+
     * Edit the pg_hba.conf (either as the user 'root' or 'postgres') to give
       the user created above permission to access the database.  Read
       the comments in pg_hba.conf regarding permissions.  An example
@@ -92,6 +94,9 @@ postgres is the regular execution of the VACUUM FULL ANALYZE command.
 This command clears out old, deleted data and analyzes the structure
 of the database so that the execution planner can predict the
 fastest way to execute a given query.
+Postgres 8.3 and later is configured to
+VACUUM automatically by default, although manual vacuuming may still
+be desireable.
 
 While the above link describes tuning in general, the examples given
 for tuning kernel parameters are Linux specific.  For setting 
