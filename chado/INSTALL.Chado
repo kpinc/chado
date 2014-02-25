@@ -216,8 +216,8 @@ As indicated, the host, port, and password are optional.
 
        $ perl Makefile.PL GMOD_ROOT=/usr/local/gmod CHADO_DB_NAME=dev_chado_01
 
-Backward compatibility may not be maintained for this method of configuring
-the install process will work.
+    Warning: Backward compatibility may not be maintained for this
+    method of configuring the install process.
 
 
 - Create the Makefile and other configuration files
