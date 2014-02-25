@@ -92,9 +92,8 @@ modification of memory settings in /etc/sysctl.conf, see the sysctl
 manpage for details.  Also critical for continued performance of
 postgres is the regular execution of the VACUUM FULL ANALYZE command.
 This command clears out old, deleted data and analyzes the structure
-of the database so that the execution planner can predict the
-fastest way to execute a given query.
-Postgres 8.3 and later is configured to
+of the database so that the execution planner can predict the fastest
+way to execute a given query.  Postgres 8.3 and later is configured to
 VACUUM automatically by default, although manual vacuuming may still
 be desireable.
 
