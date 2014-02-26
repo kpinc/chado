@@ -284,6 +284,10 @@ used by Chado and its associated tools:
 
         Port of the database daemon.
 
+        *   What schema will Chado reside in? [public]
+
+        The PostgreSQL schema within the database.
+
         *   Where shall downloaded ontologies go? [./tmp]
 
         The directory where ontology files and there lock files will be stored
