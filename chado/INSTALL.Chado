@@ -188,7 +188,7 @@ from cpan and running in the untarred directory:
 
 INSTALL THE CHADO SCHEMA
 
-- Set environmental variables
+- Set environment variables
 
 First, you must set some variables in your environment.
 If you are using bash or a bash-like shell, this is done via a command
