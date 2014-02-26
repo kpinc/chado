@@ -177,7 +177,14 @@ modules below except for SQL::Translator, which is optional.
     * LWP                      (Chado)
     * Template                 (Chado)
     * Bio::Chado::Schema       (Chado)
-  
+    
+DBIx::DBStag may not pass it's tests due to failure to connect to a
+database.  The test suite may be bypassed by downloading the package
+from cpan and running in the untarred directory:
+
+    $ make Makefile.PL
+    $ make install
+
 
 INSTALL THE CHADO SCHEMA
 
