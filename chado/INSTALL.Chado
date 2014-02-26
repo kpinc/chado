@@ -214,7 +214,8 @@ are always available when you log in.
 
    * CHADO_DB_PASSWORD: The password for the database user [opt]
 
-   * CHADO_DB_HOST: The host on which the database runs (e.g. "localhost") [opt]
+   * CHADO_DB_HOST: The host on which the database runs (e.g. "localhost")
+                    [opt]
 
    * CHADO_DB_PORT: The port on which the database is listening [opt]
 
