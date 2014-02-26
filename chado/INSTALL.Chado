@@ -290,7 +290,7 @@ used by Chado and its associated tools:
 
         *   Where shall downloaded ontologies go? [./tmp]
 
-        The directory where ontology files and there lock files will be stored
+        The directory where ontology files and their lock files will be stored.
 
         *   What is the default organism (common name, or "none")?
 
