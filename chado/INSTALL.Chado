@@ -188,9 +188,16 @@ from cpan and running in the untarred directory:
 
 INSTALL THE CHADO SCHEMA
 
-- Set environment variables
+- Set environment variables required by Makefile.PL.
 
-First, you must set some variables in your environment.
+The execution of Makefile.PL requires some variables in your
+environment be set.  The environment variables are not required by the
+"make" installation process thereafter, but may be useful during
+normal operation.  Therefore you will probably want to put those
+commands in your .tcshrc or .bashrc file so that the envirnment
+variables are always available when you log in.
+
+
 If you are using bash or a bash-like shell, this is done via a command
 like this:
 
@@ -200,9 +207,7 @@ If you are using tcsh or another csh-like shell, it is done like this:
 
        $ setenv VARNAME value
 
-To make life easier on yourself, you will probably also want to put those
-commands in your .tcshrc or .bashrc file so that the envirnment variables
-are always available when you log in. 
+The environment variables are:
 
    * GMOD_ROOT: The location of your Chado installation 
      (e.g., "/usr/local/gmod").  Will contain the source files that define 
