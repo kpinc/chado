@@ -154,15 +154,26 @@ already been moved as part of the build process.
 
 - Perl modules
       
-The perl modules can be installed via the CPAN shell and by issuing 
-the command 'install Bundle::GMOD' which will install all of the 
-modules below except for SQL::Translator, which is optional.
+The perl modules can be installed via the CPAN shell.
+    
+DBIx::DBStag may not pass it's tests due to failure to connect to a
+database.  The test suite may be bypassed by downloading the package
+from cpan and running in the untarred directory:
+
+    $ make Makefile.PL
+    $ make install
+
+or, just use cpan:
+
+    $ cpan -f DBIx::DBStag
+
+Most perl modules are installed by issuing the command 'install
+Bundle::GMOD'.
 
     * CGI                      (GBrowse)
     * GD                       (GBrowse)
     * DBI                      (GBrowse, Chado)
     * DBD::Pg                  (GBrowse, Chado)
-    * SQL::Translator          (chado) (only for a custom Chado schema)
     * Digest::MD5              (GBrowse)
     * Text::Shellwords         (GBrowse)
     * Graph                    (Bio-Chaos)
@@ -176,18 +187,20 @@ modules below except for SQL::Translator, which is optional.
     * XML::Simple              (Chado)
     * LWP                      (Chado)
     * Template                 (Chado)
+
+
+The CGI module is a pre-requsites for SQL::Translator.
+
+    * CGI                      (Chado)
+
+The SQL::Translator module is a pre-requsite for Bio::Chado::Schema.
+
+    * SQL::Translator          (chado) (only for a custom Chado schema)
+
+The Bio::Chado::Schema module must be installed separately.
+
     * Bio::Chado::Schema       (Chado)
-    
-DBIx::DBStag may not pass it's tests due to failure to connect to a
-database.  The test suite may be bypassed by downloading the package
-from cpan and running in the untarred directory:
 
-    $ make Makefile.PL
-    $ make install
-
-or, just use cpan:
-
-    $ cpan -f DBIx::DBStag
 
 INSTALL THE CHADO SCHEMA
 
