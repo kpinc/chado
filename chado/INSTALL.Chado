@@ -366,7 +366,8 @@ own PG schema:
 
 Creates PG schema, installs Chado schema (tables etc.).
 
-This wipes out any PG schema with the same name in the process!
+This wipes out any PG schema with the PG schema name you supplied,
+as well as the "frange", "so", and "genetic_code" PG schemas!
 
 - Insert baseline data
 

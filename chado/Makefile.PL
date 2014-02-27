@@ -13,7 +13,8 @@ Makefile written.  Now you should do the following, in order:
          
          STEP 3a and 3a0 WILL DELETE ANY DATA IN A DATABASE WITH THE 
             DATABASE NAME YOU PROVIDED!  These steps are optional
-         STEP 3a1 WILL DELETE ANY DATA IN THE PG SCHEMA NAME YOU PROVIDED!
+         STEP 3a1 WILL DELETE ANY DATA IN THE PG SCHEMAS: frange,
+         genetic_code, so, and the schema name you provided!
 -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*WARNING-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
   3a.  make load_schema (does both 3a0 and 3a1)
   3a0. make create_db (destroys old database and creates a new one)
@@ -754,13 +755,13 @@ metadata: $working_dir/bin/ddltrans
 	$working_dir/bin/ddltrans -f xml $working_dir/dat/chado.ddl > $working_dir/dat/chado.xml
 
 load_schema ::
-	\$(SHELL) $working_dir/bin/test_load.sh $DBHOST $DBPORT $DBUSER $DBNAME
+	\$(SHELL) $working_dir/bin/test_load.sh $DBHOST $DBPORT $DBUSER $DBNAME $SCHEMA
 
 create_db ::
 	\$(SHELL) $working_dir/bin/create_db.sh $DBHOST $DBPORT $DBUSER $DBNAME
 
 create_schema ::
-	\$(SHELL) $working_dir/bin/create_schema.sh $DBHOST $DBPORT $DBUSER $DBNAME
+	\$(SHELL) $working_dir/bin/create_schema.sh $DBHOST $DBPORT $DBUSER $DBNAME $SCHEMA
 
 prepdb ::
 	./Build prepdb
