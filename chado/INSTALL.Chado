@@ -349,11 +349,24 @@ creating the file /etc/log4perl.conf if it does not already exist.
 
 - Install the schema
 
+If you are installing Chado into it's own database:
+
    $ make load_schema
 
-Creates database, installs schema.
+Creates database, installs schema (tables etc.).
 
 This wipes out any database with the same name in the process!
+
+or
+
+If you have a database and are installing chado into it's
+own PG schema:
+
+   $make create_schema
+
+Creates PG schema, installs Chado schema (tables etc.).
+
+This wipes out any PG schema with the same name in the process!
 
 - Insert baseline data
 

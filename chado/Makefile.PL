@@ -10,10 +10,15 @@ Makefile written.  Now you should do the following, in order:
   1. make              (creates necessary build files)
   2. sudo make install (creates \$GMOD_ROOT and subdirectories)
 -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*WARNING-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-         STEP 3 WILL DELETE ANY DATA IN A DATABASE WITH THE 
-            DATABASE NAME YOU PROVIDED!
+         
+         STEP 3a and 3a0 WILL DELETE ANY DATA IN A DATABASE WITH THE 
+            DATABASE NAME YOU PROVIDED!  These steps are optional
+         STEP 3a1 WILL DELETE ANY DATA IN THE PG SCHEMA NAME YOU PROVIDED!
 -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*WARNING-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-  3a. make load_schema (loads SQL schema into database)
+  3a.  make load_schema (does both 3a0 and 3a1)
+  3a0. make create_db (destroys old database and creates a new one)
+  3a1. make create_schema (destroys old PG schema, creates a new one,
+                           and loads new PG schema with the Chado schema)
 
 or
 
@@ -750,6 +755,12 @@ metadata: $working_dir/bin/ddltrans
 
 load_schema ::
 	\$(SHELL) $working_dir/bin/test_load.sh $DBHOST $DBPORT $DBUSER $DBNAME
+
+create_db ::
+	\$(SHELL) $working_dir/bin/create_db.sh $DBHOST $DBPORT $DBUSER $DBNAME
+
+create_schema ::
+	\$(SHELL) $working_dir/bin/create_schema.sh $DBHOST $DBPORT $DBUSER $DBNAME
 
 prepdb ::
 	./Build prepdb
