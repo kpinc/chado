@@ -1,0 +1,5 @@
+# Do not install git related files.
+\.gitignore$
+
+# Do not install emacs backups
+~$
