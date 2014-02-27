@@ -36,3 +36,6 @@
 /chado/install_util/src_install.pl
 /chado/load/bin/gmod_bulk_load_gff3.pl
 /chado/pm_to_blib
+
+# Files configured by user (defaults)
+/chado/tmp/
