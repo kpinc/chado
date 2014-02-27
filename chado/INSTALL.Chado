@@ -146,7 +146,7 @@ Can be obtained from CPAN using the cpan shell with the command
 
 - ant
       
-When installing from svn, ant is needed to move GMODTools files
+When installing from git, ant is needed to move GMODTools files
 from schema/GMODTools into schema/chado.  When installing from
 a distribution, this is not necessary, as the files will have
 already been moved as part of the build process.
