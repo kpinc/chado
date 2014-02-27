@@ -185,6 +185,9 @@ from cpan and running in the untarred directory:
     $ make Makefile.PL
     $ make install
 
+or, just use cpan:
+
+    $ cpan -f DBIx::DBStag
 
 INSTALL THE CHADO SCHEMA
 
