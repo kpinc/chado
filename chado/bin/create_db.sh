@@ -6,6 +6,10 @@ DBNAME=$4;
 
 dropdb -h $DBHOST -p $DBPORT -U $DBUSER $DBNAME;
 createdb -h $DBHOST -p $DBPORT -U $DBUSER $DBNAME;
-createlang -h $DBHOST -p $DBPORT -U $DBUSER plpgsql $DBNAME;
+
+createlang -h $DBHOST -p $DBPORT -U $DBUSER --list $DBNAME \
+  | grep -q 'plpgsql' \
+  || createlang -h $DBHOST -p $DBPORT -U $DBUSER plpgsql $DBNAME;
+
 echo "database $DBNAME created on $DBHOST:$DBPORT";
 true;
