@@ -80,6 +80,10 @@ Items to do with Postgres to make it ready to go:
 
 For information on tuning postgres for performance, see
 
+    https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server
+
+and
+
     http://gmod.org/wiki/PostgreSQL_Performance_Tips
 
 and
@@ -87,15 +91,17 @@ and
     http://www.varlena.com/varlena/GeneralBits/Tidbits/perf.html
 
 The two most critical parameters to tune are shared_buffers and
-effective_cache size.  Adjusting these parameters may require
-modification of memory settings in /etc/sysctl.conf, see the sysctl
-manpage for details.  Also critical for continued performance of
-postgres is the regular execution of the VACUUM FULL ANALYZE command.
-This command clears out old, deleted data and analyzes the structure
-of the database so that the execution planner can predict the fastest
-way to execute a given query.  Postgres 8.3 and later is configured to
-VACUUM automatically by default, although manual vacuuming may still
-be desireable.
+effective_cache size.  The general rule of thumb for boxes with more
+than 1GB of RAM is to use 1/4 of the memory in your system for shared
+buffers.  Prior to PostgreSQL 9.3 adjusting these parameters may
+require modification of memory settings in /etc/sysctl.conf, see the
+sysctl manpage for details.  Also critical for continued performance
+of postgres is the regular execution of the VACUUM FULL ANALYZE
+command.  This command clears out old, deleted data and analyzes the
+structure of the database so that the execution planner can predict
+the fastest way to execute a given query.  Postgres 8.3 and later is
+configured to VACUUM automatically by default, although manual
+vacuuming may still be desireable.
 
 While the above link describes tuning in general, the examples given
 for tuning kernel parameters are Linux specific.  For setting 
