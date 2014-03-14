@@ -96,7 +96,7 @@ than 1GB of RAM is to use 1/4 of the memory in your system for shared
 buffers.  Prior to PostgreSQL 9.3 adjusting these parameters may
 require modification of memory settings in /etc/sysctl.conf, see the
 sysctl manpage for details.  Also critical for continued performance
-of postgres is the regular execution of the VACUUM FULL ANALYZE
+of postgres is the regular execution of the VACUUM ANALYZE
 command.  This command clears out old, deleted data and analyzes the
 structure of the database so that the execution planner can predict
 the fastest way to execute a given query.  Postgres 8.3 and later is
