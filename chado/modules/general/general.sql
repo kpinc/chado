@@ -37,13 +37,14 @@ create table db (
     constraint db_c1 unique (name)
 );
 
-COMMENT ON TABLE db IS 'A database authority. Typical databases in
-bioinformatics are FlyBase, GO, UniProt, NCBI, MGI, etc. The authority
-is generally known by this shortened form, which is unique within the
-bioinformatics and biomedical realm.  To Do - add support for URIs,
-URNs (e.g. LSIDs). We can do this by treating the URL as a URI -
-however, some applications may expect this to be resolvable - to be
-decided.';
+COMMENT ON TABLE db IS 'The db table contains one row per database
+authority, that is, one row per curator/creator of bioinformatic data
+collections. Typical databases in bioinformatics are FlyBase, GO,
+UniProt, NCBI, MGI, etc. The authority is generally known by this
+shortened form, which is unique within the bioinformatics and
+biomedical realm.  To Do - add support for URIs, URNs (e.g. LSIDs). We
+can do this by treating the URL as a URI - however, some applications
+may expect this to be resolvable - to be decided.';
 
 -- ================================================
 -- TABLE: dbxref
@@ -63,7 +64,7 @@ create index dbxref_idx1 on dbxref (db_id);
 create index dbxref_idx2 on dbxref (accession);
 create index dbxref_idx3 on dbxref (version);
 
-COMMENT ON TABLE dbxref IS 'A unique, global, public, stable identifier. Not necessarily an external reference - can reference data items inside the particular chado instance being used. Typically a row in a table can be uniquely identified with a primary identifier (called dbxref_id); a table may also have secondary identifiers (in a linking table <T>_dbxref). A dbxref is generally written as <DB>:<ACCESSION> or as <DB>:<ACCESSION>:<VERSION>.';
+COMMENT ON TABLE dbxref IS 'The dbxref table contains one row per version per collection of bioinformatic data, one row per Chado "database". The table provides a unique, global, public, stable identifier that can be used to reference a database version. Not necessarily an external reference - can reference data items inside the particular chado instance being used. Typically a row in a table can be uniquely identified with a primary identifier (called dbxref_id); a table may also have secondary identifiers (in a linking table <T>_dbxref). A dbxref is generally written as <DB>:<ACCESSION> or as <DB>:<ACCESSION>:<VERSION>.';
 
 COMMENT ON COLUMN dbxref.accession IS 'The local part of the identifier. Guaranteed by the db authority to be unique for that db.';
 
